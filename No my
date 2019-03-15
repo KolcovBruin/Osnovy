@@ -1,0 +1,45 @@
+[Пересланное сообщение]
+  Игорь Челноков, 4 марта в 19:20
+  #include <stdio.h> 
+  #include <stdlib.h> 
+  #define YES 1 
+  #define NO 0 
+  int main(void) 
+  { 
+   int c;// текущий символ потока 
+   int flag; // признак слова 
+   int found; // индикатор обнаружения нужного признака 
+   int cnt; // счетчик 
+   // Начальные присваивания 
+   cnt = 0; 
+   flag = NO; 
+   found = NO; 
+   // Цикл чтения символов из потока 
+   while((c=getchar())!= EOF) 
+   { 
+   if( c==' '|| c=='.'|| c=='\n'|| c==',') 
+   { 
+   // Найден разделитель 
+   if(flag == YES ) 
+   { 
+   if(found == YES ) 
+   { 
+   cnt++; 
+   } 
+   } 
+   flag = NO; 
+   } 
+   else 
+   { 
+   // Найдено слово // проверка условия 
+   if(c >= '0'&& c <= '9') 
+   found = YES; 
+   else 
+   found = NO; 
+   flag = YES; 
+   
+   } 
+   printf("kol-vo cifr = %d\n",cnt); 
+   
+   return 0; 
+  }
