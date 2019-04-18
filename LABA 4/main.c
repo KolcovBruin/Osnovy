@@ -1,15 +1,13 @@
 #include <stdio.h>
-// определение символических констант
 #define YES 1
 #define NO 0
-#define MAXLINE 1000
 int bukwa(char c);
 int razd(char c);
 int glassniy(char c);
 void process_line( char buffer[] );
 int main( void )
 {
-    char line[MAXLINE];
+    char line[1000];
     gets( line );
     process_line( line );
     puts( line );
@@ -23,19 +21,14 @@ void process_line( char buffer[] )
     int found = NO;
     int i=0;
     int a=0;
-    int pos=0; // позиция текущего символа // результирующей строки
-    int start=0; // позиция начала слова
+    int pos=0;
+    int start=0;
     int j=0;
-    
-    // цикл чтения символов из строки
     do
     {
-        c = buffer[i]; // взять текущий символ из // буфера
-        
+        c = buffer[i];
         if( razd(c)==1)
         {
-            
-            // найден разделитель
             if( flag == YES )
             {
                 if( found == NO ||buk==NO ||a==0)
@@ -43,35 +36,28 @@ void process_line( char buffer[] )
                     for( j = start; j < i; j++ )
                         buffer[pos++] = buffer[j];
                 }
-                a=0;
             }
-            
+            a=0;
             buk=YES;
             flag = NO;
             buffer[pos++] = c;
         }
         else {
-            // найдена буква
-           if (bukwa(c)==0)
+            if (bukwa(c)==0)
                 buk=NO;
             if( flag == NO )
                 start = i;
             // запомнить позицию
             if (glassniy(c)==1)
                 a++;
-           // a=a%2;
             if( a%2==0||a==0)
                 found = YES;
             else
                 found = NO;
             flag = YES; }
-        
-        
         i++;
-        
     }
     while( c != '\0' );
-    //buffer[pos] = '\0';
 }
 int razd(char c)
 {
