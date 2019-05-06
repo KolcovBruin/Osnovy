@@ -1,14 +1,21 @@
 #include <stdio.h>
 #define N 10
+#include <stdlib.h>
+#include <time.h>
 int main( void )
 {
     int x[N];// массив из N элементов
     int a1ver;
     int a2ver;
     int i;
+    srand(time(NULL));
     // ввод массива
     for( i = 0; i < N; i++ )
-        scanf("%d", &x[i]);
+        x[i]=1 + rand() % 10;
+    for( i = 0; i < N; i++ )
+        printf("%d ", x[i]);
+    printf("\n");
+    printf("\n");
     // вычисление значения левой и правой части
     a1ver = 0;
     for( i = 0; i < N/2; i++ )
@@ -32,4 +39,5 @@ int main( void )
         printf("%d ", x[i]);
     printf("\n");
     return 0; }
+
 
