@@ -56,6 +56,14 @@ int main( void )
     {
         x[Kz1][j]=0;
     }
+    printf("\n");
+    printf("max = %d",max);
+    printf("\n");
+    printf("min = %d",min);
+    printf("\n");
+    printf("№nyjnay stroka = %d",Kz1);
+    printf("\n");
+    printf("\n");
     }
     // вывод массива
     for( i = 0; i < K; i++ )
@@ -70,6 +78,6 @@ int main( void )
     printf("\n");
     printf("min = %d",min);
     printf("\n");
-    printf("№nujnay stroka = %d",Kz1);
+    printf("№nyjnay stroka = %d",Kz1);
     printf("\n");
     return 0; }
