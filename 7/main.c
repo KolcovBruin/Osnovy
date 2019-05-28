@@ -45,6 +45,6 @@ int main(void)
             ctr=0;
         }
     }
-    //gets();
+    
     return 0;
 }
