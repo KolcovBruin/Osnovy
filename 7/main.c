@@ -1,48 +1,41 @@
+#pragma warning(disable : 4996)
 #include <stdio.h>
 int main(void)
 {
-int z,l=0;
-    //int l=0;
-    int y;
-    int n=0;
-    int mask;
-    int ctr;
-    int i;
-    i=0;
-    mask=1;
-    ctr=0;
+    int z,l=0;//число и результат после маски
+   
+    //int y;
+    int n=0;//счетчик байтов
+    int mask=1;//маска
+    int ctr=0;//счетчик единиц
+    int i=0;//счетчик битов
+    
     printf("z = ");
-    scanf("%llx", &z);
-    y = (unsigned int)z;
-    while(y!=0&&n<64)
+    scanf("%x", &z);
+   // y = /*(unsigned int)*/z;
+    while(z!=0&&n<64)//нахождение внутри значащей части числа
     {
-        l=y&mask;
-        printf("%lld",l);
-        if(l==1)
+        l=z&mask;//маска
+        printf("%d",l);//вывод бита
+        if(l==1)//нахождение единицы
         {
             ctr++;
         }
-        y>>=1;
-        i++;
-        n++;
-        if(i==8)
+        z>>=1;//сдвиг на один бит
+        i++;//++бит до байта
+        n++;//++бит
+        if(i==8)//проверка на байт
         {
-            printf("ctr=%d\n",ctr);
+            printf("ctr=%d\n",ctr);//вывод колва единиц
             i=0;
             ctr=0;
         }
     }
-    /*if((i>=0)&&(i<8))
+    while(n<64)//проверка на нахождение внутри длинного числа
     {
-        printf("ctr=%d\n",ctr);
-    }*/
-    while(n<64)
-    {
-        // printf("%lld",l);
-        //ctr=0;
-        l=y&mask;
-    printf("%lld",l);
-     y>>=1;
+        l=z&mask;//маска
+        printf("%d",l);//вывод числа под маской
+        z>>=1;//сдвиг вправо
         i++;
         n++;
         if(i==8)
