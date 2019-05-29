@@ -1,9 +1,10 @@
 #pragma warning(disable : 4996)
+
 #include <stdio.h>
 int main(void)
 {
-    int z,l=0;//число и результат после маски
-   
+    unsigned long long int z=0;//число и результат после маски
+    int l;
     //int y;
     int n=0;//счетчик байтов
     int mask=1;//маска
@@ -11,7 +12,7 @@ int main(void)
     int i=0;//счетчик битов
     
     printf("z = ");
-    scanf("%x", &z);
+    scanf("%llx", &z);
    // y = /*(unsigned int)*/z;
     while(z!=0&&n<64)//нахождение внутри значащей части числа
     {
@@ -26,7 +27,7 @@ int main(void)
         n++;//++бит
         if(i==8)//проверка на байт
         {
-            printf("ctr=%d\n",ctr);//вывод колва единиц
+            printf(" ctr=%d\n",ctr);//вывод колва единиц
             i=0;
             ctr=0;
         }
@@ -40,11 +41,10 @@ int main(void)
         n++;
         if(i==8)
         {
-            printf("ctr=%d\n",ctr);
+            printf(" ctr=%d\n",ctr);
             i=0;
             ctr=0;
         }
     }
-    
     return 0;
 }
