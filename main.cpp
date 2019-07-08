@@ -4,8 +4,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <cstdlib>
+int x=1;
+int j;
 int i;
  char a;
+char znak;
 int cnt;
 float b;
 float sum;
@@ -29,6 +32,8 @@ int main()
     const double WAIT_TIMEOUT = 10.0;  // seconds
     while (true) {
         const char *sender = "{\"@type\":\"sendMessage\",\"chat_id\":111111111,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}}}";
+        const char  *senderstart="{\"@type\":\"sendMessage\",\"chat_id\":111111111,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"";
+        const char *senderfinish="\"}}}";
         const char *result = td_json_client_receive(client, WAIT_TIMEOUT); //возврат данных от телеги
         if (result != nullptr)  //результат не ноль
         {
@@ -37,12 +42,13 @@ int main()
             a=*(result+20);   //буква из Last Message
             if (a=='L')   //проверка на посл сообщение
             {
-                a=*(result+163);  //"is_outgoing":true проверяем true/false
+                a=*(result+164);  //"is_outgoing":true проверяем true/false
             
             if (a=='f')   //проверка
             {
-                char *forsnd=(char*)malloc(164);
-                memcpy(forsnd,sender,164);
+                char *forsnd=(char*)malloc(170);
+                memcpy(forsnd,sender,170);
+                char *math=(char*)malloc(300);
                 for(i=0;i>=0;i++)
                 {
                     a=*(result+i);
@@ -77,7 +83,91 @@ int main()
                         
                     }
                 }
-                cnt=579;
+                for(i=0;i>=0;i++)
+                {
+                    a=*(result+i);
+                    if(a=='m')
+                    {
+                        a=*(result+i+1);
+                        if(a=='a')
+                        {
+                        for(i=i;i>=0;i++)
+                        {
+                            a=*(result+i);
+                            if(a==':')
+                            {
+                                for(i=i;i>=0;i++)
+                                {
+                                    a=*(result+i);
+                                    if (a!=',')
+                                    {
+                                        if (a>='0'&&a<='9')
+                                        {
+                                            b*=x;
+                                            b+=(float)(a-'0');
+                                            x*=10;
+                                            if (a=='+')
+                                            {
+                                                znak=a;
+                                                x=1;
+                                                sum+=b;
+                                                b=0;
+                                            }
+                                         
+                                            // b=(float)(a-'0');
+                                            //sum=(float)((*(result+i+1))-'0')+(float)((*(result+i-1))-'0');
+                                            
+                                            /*  c1=(char)(sum+'0');
+                                             char *math1s=(char*)malloc(200);
+                                             memcpy(math1s,senderstart,200);
+                                             char *math2f=(char*)malloc(100);
+                                             memcpy(math2f,senderfinish,10);
+                                             
+                                             for (j=0;j<140;j++)
+                                             {
+                                             if (j<=134)
+                                             {
+                                             memcpy(math+j,forsnd+j,sizeof(char));
+                                             }
+                                             else if (j==135)
+                                             {
+                                             memcpy(math+j,&c1,sizeof(char));
+                                             }
+                                             else
+                                             {
+                                             memcpy(math+j,forsnd+j,sizeof(char));
+                                             }
+                                             }*/
+                                            
+                                            /* for (j=8;j>0;j--)
+                                             {
+                                             memcpy((forsnd+137+j),(forsnd+136+j),sizeof(char));
+                                             }*/
+                                            //char *math= strcat(senderstart,c1,senderfinish);
+                                                std::cout <<math<< std::endl;
+                                               // sleep(10);
+                                               // memcpy((forsnd+135),&c1,sizeof(char));
+                                             
+                                        }
+                                        }
+                                    else  i=-10;
+                                    if (znak=='+')
+                                        sum+=b;
+                                    
+                                        
+                                    }
+                                sum=0;
+                                x=1;
+                                
+                                        //i=-10;
+                            }
+                                
+                          }
+                        }
+                    }
+                }
+                
+               /* cnt=579;
                 while (cnt<582)
                 {
                 
@@ -87,15 +177,15 @@ int main()
                   c1=(char)(sum+'0');
                     
                 cnt+=2;
-                }
+                }*/
                //внесение изменений в отправляемую строку
                 
-                memcpy((forsnd+135),&c1,sizeof(char));
-                td_json_client_send(client,forsnd);
+                //memcpy((forsnd+135),&c1,sizeof(char));
+                td_json_client_send(client,math);
                 //
                // *(sender+157)=sum;
                 free(forsnd);
-                sum=0;
+                //sum=0;
             }
             }
         }
