@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <cstdlib>
+float rez1;
+float rez2;
 int cntn=0;
 int x=1;
 int j;
@@ -103,23 +105,69 @@ int main()
                                     a=*(result+i);
                                     if (a!=',')
                                     {
-                                        if (a=='+')
+                                        /*if (a=='+')
                                         {
                                             znak=a;
                                             x=1;
                                             sum+=b;
                                             b=0;
                                         }
-                                        if (a>='0'&&a<='9')
+                                        if (a=='-')
+                                        {
+                                            znak=a;
+                                            x=1;
+                                            sum+=b;
+                                            b=0;
+                                         }    b*=x;
+                                         b+=(float)(a-'0');
+                                         x=10;*/
+                                        if (a=='*')
+                                        {
+                                            for (j=i;j>0;j--)
+                                            {
+                                                a=*(result+j-1);
+                                                if (a>='0'&&a<='9')
+                                                {
+                                                    b*=x;
+                                                    b+=(float)(a-'0');
+                                                    x=10;
+                                                }
+                                                else break;
+                                            }
+                                            rez1+=b;
+                                            b=0;
+                                            for (j=i;j>0;j++)
+                                            {
+                                                
+                                                a=*(result+j+1);
+                                                if (a>='0'&&a<='9')
+                                                {
+                                                    b*=x;
+                                                    b+=(float)(a-'0');
+                                                    x=10;
+                                                }
+                                                else break;
+                                            }
+                                            rez1*=b;
+                                            std::cout <<rez1<< std::endl;
+                                            /*znak=a;
+                                            x=1;
+                                            sum+=b;
+                                            b=0;*/
+                                        }
+                                        if (a=='/')
+                                        {
+                                            znak=a;
+                                            x=1;
+                                            sum+=b;
+                                            b=0;
+                                        }
+                                        /*if (a>='0'&&a<='9')
                                         {
                                             b*=x;
                                             b+=(float)(a-'0');
                                             x=10;
-                                            
-                                            
-                                            
-                                             
-                                        }
+                                        }*/
                                         }
                                     else { i=-10;
                                     if (znak=='+')
@@ -127,9 +175,31 @@ int main()
                                         sum+=b;
                                         znak='0';
                                          std::cout <<sum<< std::endl;
+                                        
+                                    }
+                                        if (znak=='-')
+                                        {
+                                            sum-=b;
+                                            znak='0';
+                                            std::cout <<sum<< std::endl;
+                                            
+                                        }
+                                        if (znak=='*')
+                                        {
+                                            sum*=b;
+                                            znak='0';
+                                            std::cout <<sum<< std::endl;
+                                            
+                                        }
+                                        if (znak=='/')
+                                        {
+                                            sum/=b;
+                                            znak='0';
+                                            std::cout <<sum<< std::endl;
+                                            
+                                        }
                                         b=0;
-                                        x=1;
-                                    }}}
+                                        x=1;}}
                                         while ((int)(sum/x)>=1)
                                         {
                                             x*=10;
@@ -187,6 +257,7 @@ int main()
                 //
                // *(sender+157)=sum;
                 free(forsnd);
+                free(math);
                 //sum=0;
             }
             }
