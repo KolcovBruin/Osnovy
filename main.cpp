@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <cstdlib>
+int cntn=0;
 int x=1;
 int j;
 int i;
@@ -32,8 +33,8 @@ int main()
     const double WAIT_TIMEOUT = 10.0;  // seconds
     while (true) {
         const char *sender = "{\"@type\":\"sendMessage\",\"chat_id\":111111111,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}}}";
-        const char  *senderstart="{\"@type\":\"sendMessage\",\"chat_id\":111111111,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"";
-        const char *senderfinish="\"}}}";
+     //   const char  *senderstart="{\"@type\":\"sendMessage\",\"chat_id\":111111111,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"";
+  //      const char *senderfinish="\"}}}";
         const char *result = td_json_client_receive(client, WAIT_TIMEOUT); //возврат данных от телеги
         if (result != nullptr)  //результат не ноль
         {
@@ -101,61 +102,59 @@ int main()
                                     a=*(result+i);
                                     if (a!=',')
                                     {
+                                        if (a=='+')
+                                        {
+                                            znak=a;
+                                            x=1;
+                                            sum+=b;
+                                            b=0;
+                                        }
                                         if (a>='0'&&a<='9')
                                         {
                                             b*=x;
                                             b+=(float)(a-'0');
-                                            x*=10;
-                                            if (a=='+')
-                                            {
-                                                znak=a;
-                                                x=1;
-                                                sum+=b;
-                                                b=0;
-                                            }
-                                         
-                                            // b=(float)(a-'0');
-                                            //sum=(float)((*(result+i+1))-'0')+(float)((*(result+i-1))-'0');
+                                            x=10;
                                             
-                                            /*  c1=(char)(sum+'0');
-                                             char *math1s=(char*)malloc(200);
-                                             memcpy(math1s,senderstart,200);
-                                             char *math2f=(char*)malloc(100);
-                                             memcpy(math2f,senderfinish,10);
-                                             
-                                             for (j=0;j<140;j++)
-                                             {
-                                             if (j<=134)
-                                             {
-                                             memcpy(math+j,forsnd+j,sizeof(char));
-                                             }
-                                             else if (j==135)
-                                             {
-                                             memcpy(math+j,&c1,sizeof(char));
-                                             }
-                                             else
-                                             {
-                                             memcpy(math+j,forsnd+j,sizeof(char));
-                                             }
-                                             }*/
                                             
-                                            /* for (j=8;j>0;j--)
-                                             {
-                                             memcpy((forsnd+137+j),(forsnd+136+j),sizeof(char));
-                                             }*/
-                                            //char *math= strcat(senderstart,c1,senderfinish);
-                                                std::cout <<math<< std::endl;
-                                               // sleep(10);
-                                               // memcpy((forsnd+135),&c1,sizeof(char));
+                                            
                                              
                                         }
                                         }
-                                    else  i=-10;
+                                    else { i=-10;
                                     if (znak=='+')
+                                    {
                                         sum+=b;
-                                    
-                                        
+                                        znak='0';
+                                         //std::cout <<sum<< std::endl;
+                                        b=0;
+                                        x=1;
+                                    }}}
+                                        while ((int)(sum/x)>=1)
+                                        {
+                                            x*=10;
+                                            cntn++;
+                                        }
+                                    //x=0;
+                                    for (j=0;j<139+cntn;j++)
+                                    {
+                                        if (j<=134)
+                                        {
+                                            memcpy(math+j,forsnd+j,sizeof(char));
+                                        }
+                                        else if ((j>134)&&(j<=134+cntn))
+                                        {
+                                            x/=10;
+                                            c1=(char)(sum/x)+'0';
+                                            memcpy(math+j,&c1,sizeof(char));
+                                            x/=10;
+                                        }
+                                        else
+                                        {
+                                            memcpy(math+j,forsnd+j,sizeof(char));
+                                        }
                                     }
+                                    
+                                
                                 sum=0;
                                 x=1;
                                 
