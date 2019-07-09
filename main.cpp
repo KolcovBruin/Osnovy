@@ -47,9 +47,10 @@ int main()
             
             if (a=='f')   //проверка
             {
-                char *forsnd=(char*)malloc(170);
-                memcpy(forsnd,sender,170);
+                char *forsnd=(char*)malloc(200);
+                memcpy(forsnd,sender,200);
                 char *math=(char*)malloc(300);
+                memset(math,'\0',300);
                 for(i=0;i>=0;i++)
                 {
                     a=*(result+i);
@@ -125,7 +126,7 @@ int main()
                                     {
                                         sum+=b;
                                         znak='0';
-                                         //std::cout <<sum<< std::endl;
+                                         std::cout <<sum<< std::endl;
                                         b=0;
                                         x=1;
                                     }}}
@@ -146,11 +147,11 @@ int main()
                                             x/=10;
                                             c1=(char)(sum/x)+'0';
                                             memcpy(math+j,&c1,sizeof(char));
-                                            x/=10;
+                                            sum=sum-int(sum/x)*x;
                                         }
                                         else
                                         {
-                                            memcpy(math+j,forsnd+j,sizeof(char));
+                                            memcpy(math+j,forsnd+(j-cntn+1),sizeof(char));
                                         }
                                     }
                                     
@@ -181,6 +182,8 @@ int main()
                 
                 //memcpy((forsnd+135),&c1,sizeof(char));
                 td_json_client_send(client,math);
+                cntn=0;
+                x=1;
                 //
                // *(sender+157)=sum;
                 free(forsnd);
