@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <cstdlib>
+int k;
 float rez1;
 float rez2;
 int cntn=0;
@@ -49,6 +50,8 @@ int main()
             
             if (a=='f')   //проверка
             {
+                char *forresult=(char*)malloc(800);
+                memcpy(forresult,result,800);
                 char *forsnd=(char*)malloc(200);
                 memcpy(forsnd,sender,200);
                 char *math=(char*)malloc(300);
@@ -123,19 +126,6 @@ int main()
                                          x=10;*/
                                         if (a=='*')
                                         {
-                                            for (j=i;j>0;j--)
-                                            {
-                                                a=*(result+j-1);
-                                                if (a>='0'&&a<='9')
-                                                {
-                                                    b*=x;
-                                                    b+=(float)(a-'0');
-                                                    x=10;
-                                                }
-                                                else break;
-                                            }
-                                            rez1+=b;
-                                            b=0;
                                             for (j=i;j>0;j++)
                                             {
                                                 
@@ -148,8 +138,105 @@ int main()
                                                 }
                                                 else break;
                                             }
+                                            rez1+=b;
+                                            rez2=j-i;
+                                            
+                                            //delete stroka
+                                            /*
+                                             for (j=i;j>0;j++)
+                                             {
+                                             
+                                             a=*(result+j+1);
+                                             if (a>='0'&&a<='9')
+                                             {
+                                             b*=x;
+                                             b+=(float)(a-'0');
+                                             x=10;
+                                             }
+                                             else break;
+                                             }
+                                             
+                                             for (j=i;j>0;j--)
+                                             {
+                                             a=*(result+j-1);
+                                             if (a>='0'&&a<='9')
+                                             {
+                                             b*=x;
+                                             b+=(float)(a-'0');
+                                             x=10;
+                                             }
+                                             else break;
+                                             }
+                                             
+                                             if (j<=134)
+                                             {
+                                             memcpy(math+j,forsnd+j,sizeof(char));
+                                             }
+                                             else if ((j>134)&&(j<=134+cntn))
+                                             {
+                                             x/=10;
+                                             c1=(char)(sum/x)+'0';
+                                             memcpy(math+j,&c1,sizeof(char));
+                                             sum=sum-int(sum/x)*x;
+                                             }
+                                             else
+                                             {
+                                             memcpy(math+j,forsnd+(j-cntn+1),sizeof(char));
+                                             }
+                                             */
+                                           /* for (j=j;j<=j+rez2;j++)
+                                            {
+                                                memcpy(forresult+j,result+j+1,sizeof(char));
+                                            }*/
+                                            /*for (j=j;j>=j;j++)
+                                            {
+                                                memcpy(forresult+j,result+j+1,sizeof(char));
+                                            }*/
+                                            /*
+                                             else if ((j>134)&&(j<=134+cntn))
+                                             {
+                                             x/=10;
+                                             c1=(char)(sum/x)+'0';
+                                             memcpy(math+j,&c1,sizeof(char));
+                                             sum=sum-int(sum/x)*x;
+                                             }
+                                             */
+                                            b=0;
+                                            x=1;
+                                            for (j=i;j>0;j--)
+                                            {
+                                                a=*(result+j-1);
+                                                if (a>='0'&&a<='9')
+                                                {
+                                                    b*=x;
+                                                    b+=(float)(a-'0');
+                                                    x=10;
+                                                }
+                                                else break;
+                                            }
                                             rez1*=b;
-                                            std::cout <<rez1<< std::endl;
+                                            rez2+=(i-j);
+                                            
+                                            //delete stroka
+                                            x=1;
+                                             while ((int)(rez1/x)>=1)
+                                             { x*=10;
+                                                 cntn++;
+                                             }
+                                            k=j+cntn;
+                                            for (j=j;j<k;j++)
+                                            {
+                                                 x/=10;
+                                                c1=(char)(rez1/x)+'0';
+                                                memcpy(forresult+j,&c1,sizeof(char));
+                                                rez1=rez1-int(rez1/x)*x;
+                                               
+                                            }
+                                            for (j=j;j<=1000;j++)
+                                            {
+                                                memcpy(forresult+j,result+j+1,sizeof(char));
+                                            }
+                                            std::cout <<forresult<< std::endl;
                                             /*znak=a;
                                             x=1;
                                             sum+=b;
