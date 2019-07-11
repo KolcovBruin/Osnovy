@@ -57,6 +57,7 @@ int main()
             if (a=='f')   //проверка
             {
                 char *forresult=(char*)malloc(800);
+                 memset(forresult,'\0',800);
                 memcpy(forresult,result,800);
                 char *forsnd=(char*)malloc(200);
                 memcpy(forsnd,sender,200);
@@ -188,10 +189,88 @@ int main()
                                                 std::cout <<forresult<< std::endl;
                                                 //sleep(2);
                                             }
-                                            std::cout <<forresult<< std::endl;
-                                           // sleep(2);
                                             br=1;
                                             i=580;
+                                        }
+                                        
+                                            std::cout <<forresult<< std::endl;
+                                           // sleep(2);
+                                            if (a=='/')
+                                            {
+                                                b=0;
+                                                x=1;
+                                                j=i;
+                                                a=*(forresult+j-1);
+                                                while (a>='0'&&a<='9')
+                                                {
+                                                    j--;
+                                                    a=*(forresult+j-1);
+                                                    
+                                                }
+                                                cntn1=i-j;
+                                                for(j=i-cntn1;j<i;j++)
+                                                {
+                                                    a=*(forresult+j);
+                                                    if (a>='0'&&a<='9')
+                                                    {
+                                                        b*=x;
+                                                        b+=(float)(a-'0');
+                                                        std::cout <<b<< std::endl;
+                                                        x=10;
+                                                    }
+                                                    else break;
+                                                }
+                                                rez1=b;
+                                                std::cout <<rez1<< std::endl;
+                                                rez2=cntn1;
+                                                b=0;
+                                                x=1;
+                                                
+                                                for (j=i;j>0;j++)
+                                                {
+                                                    
+                                                    a=*(forresult+j+1);
+                                                    if (a>='0'&&a<='9')
+                                                    {
+                                                        
+                                                        b*=x;
+                                                        b+=(float)(a-'0');
+                                                        x=10;
+                                                    }
+                                                    else break;
+                                                }
+                                                rez1/=b;
+                                                std::cout <<rez1<< std::endl;
+                                                cntn2=j-i;
+                                                rez2+=cntn2;
+                                                //delete stroka
+                                                x=1;
+                                                while ((int)(rez1/x)>=1)
+                                                { x*=10;
+                                                    cntn++;
+                                                }
+                                                k=j+cntn-rez2-1;
+                                                //j=i-cntn1;
+                                                for (j=i-cntn1-1;j<(i-cntn1+cntn)-1;j++)
+                                                {
+                                                    x/=10;
+                                                    c1=(char)(rez1/x)+'0';
+                                                    std::cout <<c1<< std::endl;
+                                                    memcpy(forresult+j+1,&c1,sizeof(char));
+                                                    rez1=rez1-int(rez1/x)*x;
+                                                    std::cout <<forresult<< std::endl;
+                                                    //sleep(1);
+                                                }
+                                                for (j=j+1;j<=1000;j++)
+                                                {
+                                                    memcpy(forresult+j,forresult+i+cntn2+1,sizeof(char));
+                                                    i++;
+                                                    std::cout <<forresult<< std::endl;
+                                                    //sleep(2);
+                                                }
+                                                std::cout <<forresult<< std::endl;
+                                                
+                                            
                                            /* if (znak=='+')
                                             {
                                                 sum+=b;
@@ -199,7 +278,12 @@ int main()
                                                 std::cout <<sum<< std::endl;
                                                 
                                             }*/
+                                                br=1;
+                                                i=580;
                                         }
+                                        
+                                        
+                                        
                                         b=0;
                                         x=1;
                                         j=0;
@@ -260,9 +344,23 @@ int main()
                                                     sum+=b;
                                                     b=0;
                                                 }
+                                                
                                                else if (znak=='+')
                                                 {
                                                     sum+=b;
+                                                    b=0;
+                                                    znak='0';
+                                                }
+                                                if (a=='-')
+                                                {
+                                                    znak=a;
+                                                    sum+=b;
+                                                    b=0;
+                                                }
+                                                
+                                                else if (znak=='-')
+                                                {
+                                                    sum-=b;
                                                     b=0;
                                                     znak='0';
                                                 }
@@ -279,37 +377,7 @@ int main()
                                         i=-10;
                                     }
                                     br=0;
-                                   // i=580;
-                                   /* if (znak=='+')
-                                    {
-                                        sum+=b;
-                                        znak='0';
-                                         std::cout <<sum<< std::endl;
-                                        
-                                    }
-                                        if (znak=='-')
-                                        {
-                                            sum-=b;
-                                            znak='0';
-                                            std::cout <<sum<< std::endl;
-                                            
-                                        }
-                                        if (znak=='*')
-                                        {
-                                            sum*=b;
-                                            znak='0';
-                                            std::cout <<sum<< std::endl;
-                                            
-                                        }
-                                        if (znak=='/')
-                                        {
-                                            sum/=b;
-                                            znak='0';
-                                            std::cout <<sum<< std::endl;
-                                            
-                                        }
-                                        b=0;
-                                        x=1;}*/
+                                   
                                     
                                 }
                                 x=1;
@@ -371,7 +439,7 @@ int main()
                // *(sender+157)=sum;
                 free(forsnd);
                 free(math);
-                //free(forresult);
+                free(forresult);
                 i=0;
                 j=0;
                  std::cout <<"finish"<< std::endl;
