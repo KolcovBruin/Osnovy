@@ -64,7 +64,7 @@ int main()
             
             if (a=='f')   //проверка
             {
-                   td_json_client_send(client," {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}");
+              //  td_json_client_send(client," {\"@type\": \"sendMessage\",\"chat_id\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"\0\"}},\"reply_markup\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}");
                 char *forresult=(char*)malloc(800);
                  memset(forresult,'\0',800);
                 memcpy(forresult,result,800);
@@ -171,7 +171,7 @@ int main()
                                             }
                                             rez1*=b;
                                             rezf=rez1;
-                                            std::cout <<rez1<< std::endl;
+                                           // std::cout <<rez1<< std::endl;
                                             cntn2=j-i;
                                             rez2+=cntn2;
                                             //delete stroka
@@ -189,22 +189,23 @@ int main()
                                                 std::cout <<c1<< std::endl;
                                                 memcpy(forresult+j+1,&c1,sizeof(char));
                                                 rez1=rez1-int(rez1/x)*x;
-                                               std::cout <<forresult<< std::endl;
+                                              // std::cout <<forresult<< std::endl;
                                                 //sleep(1);
                                             }
-                                            for (j=j+1;j<=1000;j++)
+                                            for (j=j+1;j<=1000;j++)   //1000
                                             {
                                                 memcpy(forresult+j,forresult+i+cntn2+1,sizeof(char));
                                                 i++;
-                                                std::cout <<forresult<< std::endl;
+                                                //std::cout <<forresult<< std::endl;
                                                 //sleep(2);
                                             }
                                             br=1;
                                             i=580;
                                         }
                                         
-                                            std::cout <<forresult<< std::endl;
+                                            //std::cout <<forresult<< std::endl;
                                            // sleep(2);
+                                        a=*(forresult+i);
                                             if (a=='/')
                                             {
                                                 b=0;
@@ -269,14 +270,14 @@ int main()
                                                     std::cout <<c1<< std::endl;
                                                     memcpy(forresult+j+1,&c1,sizeof(char));
                                                     rez1=rez1-int(rez1/x)*x;
-                                                    std::cout <<forresult<< std::endl;
+                                                   // std::cout <<forresult<< std::endl;
                                                     //sleep(1);
                                                 }
                                                 for (j=j+1;j<=1000;j++)
                                                 {
                                                     memcpy(forresult+j,forresult+i+cntn2+1,sizeof(char));
                                                     i++;
-                                                    std::cout <<forresult<< std::endl;
+                                                    //std::cout <<forresult<< std::endl;
                                                     //sleep(2);
                                                 }
                                                 std::cout <<forresult<< std::endl;
@@ -456,9 +457,11 @@ int main()
                 cntn3=0;
                 //
                // *(sender+157)=sum;
-                free(forsnd);
+                // memset(forresult,'5',800);
+               // memset(math,'5',300);
+              /*  free(forsnd);
                 free(math);
-                free(forresult);
+                free(forresult);*/
                 i=0;
                 j=0;
                  std::cout <<"finish"<< std::endl;
