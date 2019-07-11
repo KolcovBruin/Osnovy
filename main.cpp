@@ -4,9 +4,12 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <cstdlib>
+
+int rezf;
 int br;
 int cntn2;
 int cntn1;
+int cntn3=0;
 int k;
 float rez1;
 int rez2;
@@ -31,22 +34,25 @@ int main()
     //key
   td_json_client_send(client, "{\"@type\": \"checkDatabaseEncryptionKey\", \"key\":\"862204240:AAHFzvfzbI7cqO3StzUoSoEdFp0f6imLXvE\"}");
     //proxy
-    td_json_client_send(client, "{\"@type\":\"addProxy\",\"type\":{\"@type\":\"proxyTypeSocks5\"},\"server\":\"51.144.228.148\", \"port\":1080,\"enable\":true}");
+    td_json_client_send(client, "{\"@type\":\"addProxy\",\"type\":{\"@type\":\"proxyTypeSocks5\"},\"server\":\"95.216.224.183\", \"port\":1080,\"enable\":true}");
    // std::cout << "yyyy";
    // sleep(3);
     //token
   td_json_client_send(client, "{\"@type\": \"checkAuthenticationBotToken\", \"token\":     \"862204240:AAHFzvfzbI7cqO3StzUoSoEdFp0f6imLXvE\"}");
+    td_json_client_send(client," {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}");
     
     
-    td_json_client_send(client," {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"reply_markup_\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":{ {{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} }  { {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} }}}}");
-    std::cout << " {\"@type\": \"sendMessage\",\"chat_id_\":111111111,\"reply_markup_\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":{ {{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} }  { {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} }}}}" << std::endl;
+   // sleep(10);
+    std::cout << " {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup_\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}" << std::endl;
     
     const double WAIT_TIMEOUT = 10.0;  // seconds
     while (true) {
         const char *sender = "{\"@type\":\"sendMessage\",\"chat_id\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}}}";
      //   const char  *senderstart="{\"@type\":\"sendMessage\",\"chat_id\":111111111,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"";
   //      const char *senderfinish="\"}}}";
+        //" {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup_\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}"
         const char *result = td_json_client_receive(client, WAIT_TIMEOUT); //возврат данных от телеги
+       
         if (result != nullptr)  //результат не ноль
         {
             std::cout << result << std::endl;  //вывод приходящих данных
@@ -58,6 +64,7 @@ int main()
             
             if (a=='f')   //проверка
             {
+                   td_json_client_send(client," {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}");
                 char *forresult=(char*)malloc(800);
                  memset(forresult,'\0',800);
                 memcpy(forresult,result,800);
@@ -163,6 +170,7 @@ int main()
                                                 else break;
                                             }
                                             rez1*=b;
+                                            rezf=rez1;
                                             std::cout <<rez1<< std::endl;
                                             cntn2=j-i;
                                             rez2+=cntn2;
@@ -242,6 +250,7 @@ int main()
                                                     else break;
                                                 }
                                                 rez1/=b;
+                                                rezf=rez1;
                                                 std::cout <<rez1<< std::endl;
                                                 cntn2=j-i;
                                                 rez2+=cntn2;
@@ -293,6 +302,7 @@ int main()
                                         cntn=0;
                                         cntn1=0;
                                         cntn2=0;
+                                        //rezf=rez1;
                                         rez1=0;
                                         //i=580;
                                         /*if (a=='/')
@@ -342,9 +352,11 @@ int main()
                                                
                                                 if (a=='+')
                                                 {
+                                                    cntn3++;
                                                     znak=a;
                                                     sum+=b;
                                                     b=0;
+                                                    
                                                 }
                                                 
                                                else if (znak=='+')
@@ -362,6 +374,7 @@ int main()
                                                 
                                                 else if (znak=='-')
                                                 {
+                                                    cntn3++;
                                                     sum-=b;
                                                     b=0;
                                                     znak='0';
@@ -383,6 +396,7 @@ int main()
                                     
                                 }
                                 x=1;
+                                if (cntn3==0)  sum=rezf;
                                        while ((int)(sum/x)>=1)
                                         {
                                             x*=10;
@@ -434,9 +448,12 @@ int main()
                //внесение изменений в отправляемую строку
                 
                 //memcpy((forsnd+135),&c1,sizeof(char));
+                
+                 //" {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup_\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}"
                 td_json_client_send(client,math);
                 cntn=0;
                 x=1;
+                cntn3=0;
                 //
                // *(sender+157)=sum;
                 free(forsnd);
