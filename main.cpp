@@ -31,17 +31,19 @@ int main()
     //key
   td_json_client_send(client, "{\"@type\": \"checkDatabaseEncryptionKey\", \"key\":\"862204240:AAHFzvfzbI7cqO3StzUoSoEdFp0f6imLXvE\"}");
     //proxy
-    td_json_client_send(client, "{\"@type\":\"addProxy\",\"type\":{\"@type\":\"proxyTypeSocks5\"},\"server\":\"45.77.66.109\", \"port\":33042,\"enable\":true}");
+    td_json_client_send(client, "{\"@type\":\"addProxy\",\"type\":{\"@type\":\"proxyTypeSocks5\"},\"server\":\"51.144.228.148\", \"port\":1080,\"enable\":true}");
    // std::cout << "yyyy";
    // sleep(3);
     //token
   td_json_client_send(client, "{\"@type\": \"checkAuthenticationBotToken\", \"token\":     \"862204240:AAHFzvfzbI7cqO3StzUoSoEdFp0f6imLXvE\"}");
-    td_json_client_send(client," {\"type\": \"sendMessage\",\"reply_markup_\": {\"replyMarkupShowKeyboard\": {\"keyboardButton\":{\"text\":\"knopka\", \"type\":\"keyboardButtonTypeText\"}}, \"one_time\":true}}");
-    std::cout << " {\"type\": \"sendMessage\",\"reply_markup_\": {\"replyMarkupShowKeyboard\": {\"keyboardButton\":{\"text\":\"knopka\", \"type\":\"keyboardButtonTypeText\"}}, \"one_time\":true}}}" << std::endl;
+    
+    
+    td_json_client_send(client," {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"reply_markup_\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":{ {{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} }  { {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} }}}}");
+    std::cout << " {\"@type\": \"sendMessage\",\"chat_id_\":111111111,\"reply_markup_\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":{ {{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} }  { {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} }}}}" << std::endl;
     
     const double WAIT_TIMEOUT = 10.0;  // seconds
     while (true) {
-        const char *sender = "{\"@type\":\"sendMessage\",\"chat_id\":111111111,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}}}";
+        const char *sender = "{\"@type\":\"sendMessage\",\"chat_id\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}}}";
      //   const char  *senderstart="{\"@type\":\"sendMessage\",\"chat_id\":111111111,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"";
   //      const char *senderfinish="\"}}}";
         const char *result = td_json_client_receive(client, WAIT_TIMEOUT); //возврат данных от телеги
