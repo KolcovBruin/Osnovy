@@ -39,18 +39,17 @@ int main()
    // sleep(3);
     //token
   td_json_client_send(client, "{\"@type\": \"checkAuthenticationBotToken\", \"token\":     \"862204240:AAHFzvfzbI7cqO3StzUoSoEdFp0f6imLXvE\"}");
-    td_json_client_send(client," {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}");
+   
     
     
    // sleep(10);
-    std::cout << " {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup_\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}" << std::endl;
+    std::cout <<"{\"@type\": \"sendMessage\",\"chat_id\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup\": {\"@type\": \"replyMarkupShowKeyboard\", \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"options\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}}],[{\"@type\": \"keyboardButton\", \"text\":\"menu\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}}]]}}" << std::endl;
     
     const double WAIT_TIMEOUT = 10.0;  // seconds
     while (true) {
         const char *sender = "{\"@type\":\"sendMessage\",\"chat_id\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}}}";
-     //   const char  *senderstart="{\"@type\":\"sendMessage\",\"chat_id\":111111111,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"";
-  //      const char *senderfinish="\"}}}";
-        //" {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup_\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}"
+        const char *knpki ="{\"@type\":\"sendMessage\",\"chat_id\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"Hello,World\"}},\"reply_markup\": {\"@type\": \"replyMarkupShowKeyboard\", \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"options\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}}],[{\"@type\": \"keyboardButton\", \"text\":\"menu\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}}]]}}" ;
+     
         const char *result = td_json_client_receive(client, WAIT_TIMEOUT); //возврат данных от телеги
        
         if (result != nullptr)  //результат не ноль
@@ -64,7 +63,7 @@ int main()
             
             if (a=='f')   //проверка
             {
-              //  td_json_client_send(client," {\"@type\": \"sendMessage\",\"chat_id\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"\0\"}},\"reply_markup\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}");
+                //td_json_client_send(client,"{\"@type\":\"sendMessage\",\"chat_id\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup\": {\"@type\": \"replyMarkupShowKeyboard\", \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"options\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}}],[{\"@type\": \"keyboardButton\", \"text\":\"menu\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}}]]}}");
                 char *forresult=(char*)malloc(800);
                  memset(forresult,'\0',800);
                 memcpy(forresult,result,800);
@@ -72,6 +71,8 @@ int main()
                 memcpy(forsnd,sender,200);
                 char *math=(char*)malloc(300);
                 memset(math,'\0',300);
+                char *knopki=(char*)malloc(800);
+                memcpy(knopki,knpki,800);
                 for(i=0;i>=0;i++)
                 {
                     a=*(result+i);
@@ -92,7 +93,7 @@ int main()
                                         {
                                             
                                             memcpy((forsnd+i-9),&a,sizeof(char));
-                                           
+                                            memcpy((knopki+i-9),&a,sizeof(char));
                                             
                                         }
                                         else
@@ -121,6 +122,18 @@ int main()
                             {
                                 for(i=i;i>=0;i++)
                                 {
+                                    a=*(forresult+i+3);
+                                    if(a=='s')
+                                    {
+                                        a=*(forresult+i+4);
+                                        if(a=='t')
+                                        {
+                                            td_json_client_send(client,knopki);
+                                             std::cout << knopki << std::endl;
+                                            break;
+                                            //goto end;
+                                        }
+                                    }
                                     a=*(forresult+i);
                                     if (a!=',')
                                     {
@@ -452,6 +465,7 @@ int main()
                 
                  //" {\"@type\": \"sendMessage\",\"chat_id_\":247504167,\"input_message_content\":{\"@type\":\"inputMessageText\",\"text\":{\"@type\":\"formattedText\",\"text\":\"1\"}},\"reply_markup_\": {\"@type\": \"replyMarkupShowKeyboard\",  \"rows\":[ [{\"@type\": \"keyboardButton\", \"text\":\"s1knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s1knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ],  [ {\"@type\": \"keyboardButton\", \"text\":\"s2knopka1\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}},  {\"@type\": \"keyboardButton\", \"text\":\"s2knopka2\", \"type\": {\"@type\": \"keyboardButtonTypeText\"}} ]]}}"
                 td_json_client_send(client,math);
+       
                 cntn=0;
                 x=1;
                 cntn3=0;
