@@ -4,7 +4,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <cstdlib>
+//https://tdlib.github.io/td/build.html для компиляции библиотеки
 
+//https://core.telegram.org/tdlib/docs/annotated.html. самая полезная страницы для познания tdlib!!!!!!
+//бот написан очень сыро, можно очень многое оптимизировать, ввести функции и тп, но сил нет, все желающим разобраться желаю удачи
 int rezf;//результат умножения на случай отсутствия сложения
 int br;//лишняя переменная, лень чистить
 int cntn2;//счетчик колва разрядов
@@ -34,7 +37,7 @@ int main()
     td_json_client_send(client, "{\"@type\": \"setTdlibParameters\",\"parameters\":{\"database_directory\": \"tdlib\",\"use_message_database\": false,\"use_secret_chats\": true,\"api_id\":704839,\"api_hash\": \"f8503bbd9f7218c07a0d046a3dd9334d\", \"system_language_code\": \"ru\",\"device_model\": \"Desktop\",\"system_version\": \"Linux\",\"application_version\": \"1.0\",\"enable_storage_optimizer\": true}}");
     //key
     //Ключ, нужен библиотеки не важно занчение
-  td_json_client_send(client, "{\"@type\": \"checkDatabaseEncryptionKey\", \"key\":\"862204240:AAHFzvfzbI7cqO3StzUoSoEdFp0f6imLXvE\"}");
+  td_json_client_send(client, "{\"@type\": \"checkDatabaseEncryptionKey\", \"key\":\"111111\"}");
     //proxy
     //Прокси, Привет Роскомнадзор
     td_json_client_send(client, "{\"@type\":\"addProxy\",\"type\":{\"@type\":\"proxyTypeSocks5\"},\"server\":\"95.216.224.183\", \"port\":1080,\"enable\":true}");
@@ -42,7 +45,7 @@ int main()
    // sleep(3);
     //token
     //Токен, для определения бота к которому подключаться, записывается в библиотеку, перезаписать не получится программой, только если в файл
-  td_json_client_send(client, "{\"@type\": \"checkAuthenticationBotToken\", \"token\":     \"862204240:AAHFzvfzbI7cqO3StzUoSoEdFp0f6imLXvE\"}");
+  td_json_client_send(client, "{\"@type\": \"checkAuthenticationBotToken\", \"token\":     \"111111\"}");
    
     
     
