@@ -37,7 +37,7 @@ void process_line( char buffer[] )
             {
                 if( found == NO ||buk==NO ||a==0)
                 {
-                    for( j = start; j < i; j++ )
+                    for( j = start; j < i+1; j++ )
                       
                         buffer[pos++] = buffer[j];
                 }
@@ -45,8 +45,10 @@ void process_line( char buffer[] )
             a=0;
             buk=YES;
             flag = NO;
-            *buf++;  //test: *buf+=pos
+            
+            pos;
             buffer[pos++] = *buf;
+            
         }
         else {
             if (bukwa(buf)==0)
@@ -61,6 +63,8 @@ void process_line( char buffer[] )
             else
                 found = NO;
             flag = YES; }
+        i++;
+        
         buff=*buf;
         *buf++;
     }
