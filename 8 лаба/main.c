@@ -26,6 +26,7 @@ void process_line( char buffer[] )
     int j=0;
     do
     {
+        //test
         c = buffer[i];
         if( razd(c)==1)
         {
