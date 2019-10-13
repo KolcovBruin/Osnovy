@@ -52,6 +52,7 @@ ptr++;
     
     printf ("%i\n", rgt);
 fclose( fpin );
+    fclose(fpout);
 }
 
 
