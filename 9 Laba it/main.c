@@ -1,13 +1,10 @@
 #include <stdio.h>
 #define MAXLINE 1024
-#define Location_data ""
-#define Location_res ""
+#define Location_data ""  //Users/my/Desktop/проекты языка си/9 Laba it/9 Laba it/Data
+#define Location_res "" //Users/my/Desktop/проекты языка си/9 Laba it/9 Laba it/Result
 int main(int argc,char *argv[] ) //программа получает входные аргументы
 {
-    /* printf ("%s\n",Location_data);
-    printf ("%s\n",argv[0]);
-    printf ("%s\n",argv[1]);
-    printf ("%s\n",argv[2]);*/
+    
     int flag=0;//повтор разделителей
     int cnt=0;// счётчик слов
     int max_cnt=0;//число слов в самой длинной строке
