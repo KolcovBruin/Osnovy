@@ -40,7 +40,7 @@ void main()
             
                 break;
             
-            if (strcmp(word,"char")==0||strcmp(word,"int")==0||strcmp(word,"float")==0||strcmp(word,"const")==0)
+            if (strcmp(word,"char")==0||strcmp(word,"int")==0||strcmp(word,"float")==0||strcmp(word,"const")==0||strcmp(word,"unsigned")==0||strcmp(word,"short")==0||strcmp(word,"long")==0)
             {
             
                 flag_1=1;
@@ -49,6 +49,7 @@ void main()
             if (flag_1==1)
             {
                printf("%s ",word);
+                 
             }
             a=0;
              word=(char*)malloc(sizeof(char));

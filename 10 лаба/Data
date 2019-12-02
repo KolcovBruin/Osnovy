@@ -1,6 +1,7 @@
-char jsd = '0' ;
-float jh = 1.9 ;
+
 void main()
 {
 }
-int knds=828 ;
+long int knds=828 ;
+unsigned char jsd = '0' ;
+float jh = 1.9 ; 
