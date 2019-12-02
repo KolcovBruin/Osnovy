@@ -1,28 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "1.h"
-#define MAXLINE 1024
-#define Location_data "/Users/my/Desktop/проекты языка си/10 лаба/10 лаба/main.c"  // /Users/my/Desktop/проекты языка си/10 лаба/10 лаба/main.c  /Users/my/Desktop/проекты языка си/10 лаба/10 лаба/Data
-#define Location_res "/Users/my/Desktop/проекты языка си/10 лаба/10 лаба/Result" // /Users/my/Desktop/проекты языка си/9 Laba it/9 Laba it/Result
-char jsd = '0' ;
-void main(int argc,char *argv[] ) //программа получает входные аргументы
+#define Location_data "/Users/my/Desktop/проекты языка си/10 лаба/10 лаба/Data"
+void main()
 {
     FILE *fp;
-    
-    
-  
     char lit='\0';
     int a=0;
-    
     int cbr_1=0;
     int cbr_2=0;
-   
     char br_1='{';
     char br_2='}';
     char *word;
     fp=fopen(Location_data, "rt");
     lit=fgetc(fp);
-   int  flag=0;
+    int  flag_1=0;
+   
     int point=0;
     word=(char*)malloc(sizeof(char));
     while (lit!='\xff')
@@ -51,29 +43,28 @@ void main(int argc,char *argv[] ) //программа получает вход
             if (strcmp(word,"char")==0||strcmp(word,"int")==0||strcmp(word,"float")==0||strcmp(word,"const")==0)
             {
             
-                flag=1;
+                flag_1=1;
             }
-            if (flag==1)
+         
+            if (flag_1==1)
             {
                printf("%s ",word);
             }
             a=0;
-           // word=(char*)realloc(word, a*sizeof(char));
              word=(char*)malloc(sizeof(char));
             lit=fgetc(fp);
         }
-        if (flag==1)
+        if (flag_1==1)
         {
            printf("\n");
         }
         lit==br_1?cbr_1++:lit==br_2?cbr_2++:NULL;
         if ((cbr_1-cbr_2)==0)
             point=0;
-         lit==';'?flag=0:NULL;
-      //про внешние сделать здесь
+         lit==';'?flag_1=0:NULL;
         lit=fgetc(fp);
     }
 }
-int cac=10000;
+int knds=828 ;
 
 

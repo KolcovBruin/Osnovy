@@ -1,2 +1,6 @@
-const char *jsb = 4 ;
-const
+char jsd = '0' ;
+float jh = 1.9 ;
+void main()
+{
+}
+int knds=828 ;
