@@ -4,7 +4,7 @@
 #define Location_d "/Users/my/Desktop/проекты языка си/4 ява/4 ява/Data"
 #define Location_r "/Users/my/Desktop/проекты языка си/4 ява/4 ява/Res"
 using namespace std;
-class House
+class House //описывает, то что мы можем выполнять с конкретными объектами
 {
 //private:
  
@@ -25,13 +25,14 @@ public:
         cout<<"Введите Площадь"<<endl;
          cin>>Area;
     }
-    void get()
+    void get() //show
     {
        cout<<"Адрес: "<<Address<<endl;
         cout<<"Этаж: "<<Floor<<endl;
         cout<<"Кол-во комнат: "<<Number_of_rooms<<endl;
         cout<<"Площадь: "<<Area<<endl;
     }
+    //несколько get чтобы, когда нам нужно вызвать одну переменную, мы не вызывали сразу все
     int get_Floor()
     {
         return Floor;
@@ -45,28 +46,7 @@ public:
         return Area;
     }
     
-    
-//    void set_Address()
-//    {
-//    cin>>Address;
-//        cout<<Address;
-//    }
-//    void set_Floor()
-//    {
-//        cin>>Floor;
-//    }
-//    void set_Number_of_rooms()
-//    {
-//        cin>>Number_of_rooms;
-//    }
-//    void set_Area()
-//    {
-//        cin>>Area;
-//    }
-//    int get_Address()
-//    {
-//        return Address;
-//    }
+
 };
 
 
@@ -77,27 +57,54 @@ int main(int argc, const char * argv[])
     int menu_1=0;
     int cnt=0;
     
-    class House Work;
-    vector<House> Home;
-//    for(int i=0;i<3;i++)
-//    {
-//    Work.set();
-//     Home.push_back(Work);
-//    }
+    class House **Work;//объект
+    //Work=new House[0];
+    //vector<House> Home; //Вектор состоящий из объектов
+// Work=new House[2];
+     Work=new House* [1];
     while (menu_1!=2)
     {
     cout<<"Меню:\n  1:Ввести еще одну квартиру \n  2:Перейти в меню поиска"<<endl;
     cin>>menu_1;
-    
+       //
+        
     switch (menu_1) {
         case 1:
-             Work.set();
-                Home.push_back(Work);
+           
+           
+            
+            Work[0]=new House[cnt+1];
+            for(int i=0;i<cnt;i++)
+                       {
+                           Work[0][i]=Work[1][i];
+//                           Work[1][i].get();
+//                            cout<<endl;
+//                           Work[0][i].get();
+                       }
+            Work[1]=new House[cnt+1];
+
+            Work[0][cnt].set();
+            for(int i=0;i<cnt+1;i++)
+            {
+            Work[1][i]=Work[0][i];
+            }
+            
+           // Work[cnt].set();
+            
+                //добавляем объект, с котоым мы работали в классе House
             cnt++;
             break;
     }
         
     }
+//    for(int j=0;j<cnt;j++)
+//    {
+//        Work[0][j].get();
+//         cout<<endl;
+//    }
+//     Work[0].get();
+//         cout<<endl;
+//    Work[1].get();
     int menu_2=0;
     int N;
     int F_1; //для этажей
@@ -106,52 +113,53 @@ int main(int argc, const char * argv[])
     {
         cout<<"Меню:\n    1:Поиск квартир по заданному кол-ву комнат\n    2:Поиск квартир по заданному кол-ву комнат и расположенных между заданными этажами\n    3:Поиск квартир больше заданной площади\n    5:выход "<<endl;
         cin>>menu_2;
-        
+        int cnt_1;
         switch (menu_2) {
             case 1:
                  cout<<"Поиск квартир по заданному кол-ву комнат\n"<<"Введите необходимое число комнат"<<endl;
                 cin>>N;
                 for(int j=0;j<cnt;j++)
                 {
-                    Work=Home[j];
-                 if  ( Work.get_Number_of_rooms()==N)
+
+                 if  ( Work[0][j].get_Number_of_rooms()==N)
                  {
-                     Work.get();
+                     
+                     Work[0][j].get();
                      cout<<endl;
                  }
                 }
                 break;
-                
-                
+
+
                 case 2:
                                 cout<<"Поиск квартир по заданному кол-ву комнат и расположенных между заданными этажами\n"<<"Введите необходимое число комнат"<<endl;
                                                cin>>N;
                 cout<<"Введите мин этаж"<<endl;
-                
+
                                                 cin>>F_1;
                  cout<<"Введите макс этаж"<<endl;
                                                 cin>>F_2;
                                                for(int j=0;j<cnt;j++)
                                                {
-                                                   Work=Home[j];
-                                                if  ( Work.get_Number_of_rooms()==N&&Work.get_Floor()<F_2&&Work.get_Floor()>F_1)
+                                                //   Work=Work[j];
+                                                if  ( Work[0][j].get_Number_of_rooms()==N&&Work[0][j].get_Floor()<F_2&&Work[0][j].get_Floor()>F_1)
                                                 {
-                                                    Work.get();
+                                                    Work[0][j].get();
                                                     cout<<endl;
                                                 }
                                                }
                                                break;
-                
+
                 case 3:
                                  cout<<"Поиск квартир больше заданной площади\n"<<"Введите необходимую площадь"<<endl;
                                                cin>>N;
                 cout<<"Квартиры превосходящие заданную площадь"<<endl;
                                                for(int j=0;j<cnt;j++)
                                                {
-                                                   Work=Home[j];
-                                                if  ( Work.get_Area()>N)
+                                                   //Work=Home[j];
+                                                if  ( Work[0][j].get_Area()>N)
                                                 {
-                                                    Work.get();
+                                                    Work[0][j].get();
                                                     cout<<endl;
                                                 }
                                                }
@@ -159,46 +167,6 @@ int main(int argc, const char * argv[])
         }
     }
     cout<<"конец программы"<<endl;
-  
-  
-    
-//    class cwc
-//    {
-//      int c;
-//      int d;
-//
-//      public:
-//        cwc (int a) {c=a; d=a;
-//             std::cout <<c<< "\n"<<d<<"\n";
-//        } /* конструктор №1 */
-//
-//        cwc (int a, int b) {c=a; d=b; /* конструктор №2 */
-//        std::cout <<c<< "\n"<<d<<"\n";
-//        }
-//    };
-//    cwc (5);
-//    cwc (100,56);
-//    char a,b,c;
-//    ifstream f;
-//    ofstream f1;
-//    char str[40];
-//
-//    f.open (Location_d);
-//    f>>a;
-//    f>>b;
-//    f>>c;
-//    f.close();
-//    cout<<"\n Recorded number  A="<<a;
-//    b=a+a;
-//    cout<<"\n b="<<b;
-//
-//    f1.open(Location_r);
-//    f1<<b;
-//    f1.close();
-//    cout<<endl;
-//
-//    // insert code here...
-
     return 0;
 }
 
