@@ -58,9 +58,6 @@ int main(int argc, const char * argv[])
     int cnt=0;
     
     class House **Work;//объект
-    //Work=new House[0];
-    //vector<House> Home; //Вектор состоящий из объектов
-// Work=new House[2];
      Work=new House* [1];
     while (menu_1!=2)
     {
@@ -77,9 +74,7 @@ int main(int argc, const char * argv[])
             for(int i=0;i<cnt;i++)
                        {
                            Work[0][i]=Work[1][i];
-//                           Work[1][i].get();
-//                            cout<<endl;
-//                           Work[0][i].get();
+
                        }
             Work[1]=new House[cnt+1];
 
@@ -89,22 +84,13 @@ int main(int argc, const char * argv[])
             Work[1][i]=Work[0][i];
             }
             
-           // Work[cnt].set();
-            
-                //добавляем объект, с котоым мы работали в классе House
+      
             cnt++;
             break;
     }
         
     }
-//    for(int j=0;j<cnt;j++)
-//    {
-//        Work[0][j].get();
-//         cout<<endl;
-//    }
-//     Work[0].get();
-//         cout<<endl;
-//    Work[1].get();
+
     int menu_2=0;
     int N;
     int F_1; //для этажей
@@ -141,7 +127,6 @@ int main(int argc, const char * argv[])
                                                 cin>>F_2;
                                                for(int j=0;j<cnt;j++)
                                                {
-                                                //   Work=Work[j];
                                                 if  ( Work[0][j].get_Number_of_rooms()==N&&Work[0][j].get_Floor()<F_2&&Work[0][j].get_Floor()>F_1)
                                                 {
                                                     Work[0][j].get();
@@ -156,7 +141,6 @@ int main(int argc, const char * argv[])
                 cout<<"Квартиры превосходящие заданную площадь"<<endl;
                                                for(int j=0;j<cnt;j++)
                                                {
-                                                   //Work=Home[j];
                                                 if  ( Work[0][j].get_Area()>N)
                                                 {
                                                     Work[0][j].get();
