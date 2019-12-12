@@ -153,4 +153,4 @@ int main(int argc, const char * argv[])
     cout<<"конец программы"<<endl;
     return 0;
 }
-//https://yadi.sk/d/x36XI6v7lCnZbg
+
