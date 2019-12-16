@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #define Location_data ""// "/Users/my/Desktop/Laba_color/Laba_color/main.c"
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"
@@ -9,10 +10,17 @@
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
 
-
+#define jkl 7.7
 int main(int argc,char *argv[])
 {
-//    printf("jbas \0 jabsdbc");
+    /*
+       7.7
+       */
+    printf ("%f", 7.7 );
+    //7.7
+    float a= 7.7 ;
+    printf(" 7.7 %f", 7.7 );
+//    printf("jbas  jabsdbc");
 //    printf ("%s",KRED);
     FILE *in;
     if (Location_data!="")
@@ -25,48 +33,134 @@ int main(int argc,char *argv[])
              printf ("%s", KNRM);
             return 0;}
      char sim;
-     sim=getc(in);
+    // sim=getc(in);
     int i=0;
     int j=0;
     char **string;
     string = (char**)malloc(sizeof(char*));
     *string= (char*)malloc(sizeof(char));
-    while (sim!='\xff')
+  
+
+    int dot_pos=0;
+    int cmt_pos_1=0;
+     int cmt_pos_2=0;
+    int cmt_2_pos_1=0;
+    int cmt_2_pos_2=0;
+    int flag_dot=0;// на точку
+    int flag_brkt=0;//на скобку
+   
+    int flag_cmt_1=0;//на закомментированнойсть текста //
+     int flag_cmt_2=0;//на закомментированнойсть текста /* */
+    int flag_true=0;//выполнение условия для вещ конст
+   do
     {
-        while (sim!='\n'&&sim!='\0')
+       do
         {
-            while (sim!=' '&&sim!='\n'&&sim!='\0')
+        do
             {
+                 sim=getc(in);
                 string[i][j]=sim;
-                sim=getc(in);
+               if (sim=='.')
+               {
+                   flag_dot=1;
+                   dot_pos=j;
+               }
+            if (sim =='/'&& flag_cmt_2!=3 )
+            {
+               // flag_cmt_2=1;
+                cmt_2_pos_1=j;
+            }
+                if (sim=='*'&&j==cmt_2_pos_1+1)
+                {
+                    flag_cmt_2=2;
+                    cmt_2_pos_1=j;
+                }
+                if (sim=='*'&&flag_cmt_2==2&&cmt_2_pos_1!=j)
+                {
+                    cmt_2_pos_2=j;
+                    flag_cmt_2=3;
+                }
+                if (sim=='/'&&j==cmt_2_pos_2+1&&  flag_cmt_2==3)
+                    flag_cmt_2=0;
+//                if (sim=='"'&&flag_brkt==1)
+//                    flag_brkt=0;
+//                if (sim=='"')
+//                  flag_brkt=1;
+//                if (sim =='/'&&flag_cmt_1==1)
+//                    flag_cmt_1=2;
+                if (sim=='/'&&flag_cmt_1!=1)
+                {
+                    flag_cmt_1=1;
+                    cmt_pos_1=j;
+                    cmt_pos_2=i;
+                    
+                }
+                if (sim == '"'&&flag_brkt==1)
+                    flag_brkt=2;
+                if (sim=='"'&&flag_brkt!=2)
+                    flag_brkt=1;
+                
+                    
+//                if (sim=='/')
+//                flag_cmt_2=1;
+//                if (sim=='*'&&flag_cmt_2==1)
+//                    flag_cmt_2=2;
+//               // else flag_cmt_2=0;
+//                if (sim=='*'&&flag_cmt_2==2)
+//                    flag_cmt_2=3;
+//                if (sim=='/'&&flag_cmt_2==3)
+//                    flag_cmt_2=0;
                 j++;
                 string[i]=(char*)realloc(string[i],(j+2)*sizeof(char));
             }
-            sim=getc(in);
+            while (sim!=' '&&sim!='\xff'&&sim!='\n'&&sim!='\0'&&sim!=';');
+            
             string[i][j]='\0';
+           
+            
+            if (  flag_dot==1 && string[i][dot_pos+1]>='0' && string[i][dot_pos+1]<='9'  &&    string[i][dot_pos-1]>='0' && string[i][dot_pos-1]<='9')
+                flag_true=1;
+            flag_dot=0;
+            if (flag_cmt_1==1&&string[cmt_pos_2][cmt_pos_1+1]=='/')
+                flag_true=0;
+            if (flag_brkt==1)
+                 flag_true=0;
+            if (flag_cmt_2!=0)
+                 flag_true=0;
+           // flag_brkt=0;
+//            flag_cmt_1=0;
+            //sim=getc(in);
+            
             j=0;
-             printf("%s\n",string[i]);
+            if (flag_true==1)
+            {
+                printf ("%s",KRED);
+            printf("%s",string[i]);
+            printf ("%s",KNRM);
+            }
+            else  printf("%s",string[i]);
+             
+            flag_true=0;
             i++;
             //string = (char**)malloc(sizeof(char*));
               string[i]=(char*)malloc(sizeof(char));
             string=(char**)realloc(string,(i+2)*sizeof(char*));
             //string=(char*)malloc(sizeof(char));
         }
-        sim=getc(in);
+        while (sim!='\n'&&sim!='\xff'&&sim!='\0');
+        flag_cmt_1=0;
+        flag_brkt=0;  // !!!!!!
+       // sim=getc(in);
+        
         j=0;
         i=0;
-         string = (char**)malloc(sizeof(char*));
-         string[i]=(char*)malloc(sizeof(char));
+        //string=(char**)realloc(string,1*sizeof(char*));
+//         string = (char**)malloc(sizeof(char*));
+//         string[i]=(char*)malloc(sizeof(char));
+        //printf("%s",KRED);
     }
+    while (sim!='\xff');
    
-    for (int i=0;i<350;i++)
-    {
-    sim=getc(in);
-        if (i>100)
-             printf ("%s",KGRN);
-        printf("%c", sim);
-    }
-     printf ("\n");
-     printf ("%s", KNRM);
     return 0;
 }
+
