@@ -44,7 +44,7 @@ int main(int argc,char *argv[])
     int cmt_2_pos_1=0;
     int cmt_2_pos_2=0;
     int flag_dot=0;// на точку
-    int flag_brkt=0;//на скобку
+    int flag_brkt=0;//на скобку  //проверка при выводе на поиск чисел в притф
    
     int flag_cmt_1=0;//на закомментированнойсть текста //
      int flag_cmt_2=0;//на закомментированнойсть текста /* */
