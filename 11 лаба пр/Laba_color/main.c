@@ -16,12 +16,10 @@ int main(int argc,char *argv[])
     /*
        7.7
        */
-    printf ("%f", 7.7 );
+    printf ("%f", 7.7);
     //7.7
-    float a= 7.7 ;
-    printf(" 7.7 %f", 7.7 );
-//    printf("jbas  jabsdbc");
-//    printf ("%s",KRED);
+    float a= 7.7;
+    printf(" 7.7 %f", 7.7);
     FILE *in;
     if (Location_data!="")
         {
@@ -33,7 +31,6 @@ int main(int argc,char *argv[])
              printf ("%s", KNRM);
             return 0;}
      char sim;
-    // sim=getc(in);
     int i=0;
     int j=0;
     char **string;
@@ -82,12 +79,7 @@ int main(int argc,char *argv[])
                 }
                 if (sim=='/'&&j==cmt_2_pos_2+1&&  flag_cmt_2==3)
                     flag_cmt_2=0;
-//                if (sim=='"'&&flag_brkt==1)
-//                    flag_brkt=0;
-//                if (sim=='"')
-//                  flag_brkt=1;
-//                if (sim =='/'&&flag_cmt_1==1)
-//                    flag_cmt_1=2;
+
                 if (sim=='/'&&flag_cmt_1!=1)
                 {
                     flag_cmt_1=1;
@@ -101,15 +93,7 @@ int main(int argc,char *argv[])
                     flag_brkt=1;
                 
                     
-//                if (sim=='/')
-//                flag_cmt_2=1;
-//                if (sim=='*'&&flag_cmt_2==1)
-//                    flag_cmt_2=2;
-//               // else flag_cmt_2=0;
-//                if (sim=='*'&&flag_cmt_2==2)
-//                    flag_cmt_2=3;
-//                if (sim=='/'&&flag_cmt_2==3)
-//                    flag_cmt_2=0;
+
                 j++;
                 string[i]=(char*)realloc(string[i],(j+2)*sizeof(char));
             }
@@ -127,37 +111,39 @@ int main(int argc,char *argv[])
                  flag_true=0;
             if (flag_cmt_2!=0)
                  flag_true=0;
-           // flag_brkt=0;
-//            flag_cmt_1=0;
-            //sim=getc(in);
+           
             
-            j=0;
             if (flag_true==1)
             {
-                printf ("%s",KRED);
-            printf("%s",string[i]);
+                for (int u=0;u<j;u++)
+                {
+                    if ((string[i][u]>'9'||string[i][u]<'0')&&string[i][u]!='.')
+                         printf ("%s",KNRM);
+                    else printf ("%s",KCYN);
+
+                  printf("%c",string[i][u]);
+                    
+                }
             printf ("%s",KNRM);
             }
             else  printf("%s",string[i]);
              
             flag_true=0;
+             j=0;
             i++;
-            //string = (char**)malloc(sizeof(char*));
+         
               string[i]=(char*)malloc(sizeof(char));
             string=(char**)realloc(string,(i+2)*sizeof(char*));
-            //string=(char*)malloc(sizeof(char));
+  
         }
         while (sim!='\n'&&sim!='\xff'&&sim!='\0');
         flag_cmt_1=0;
         flag_brkt=0;  // !!!!!!
-       // sim=getc(in);
+    
         
         j=0;
         i=0;
-        //string=(char**)realloc(string,1*sizeof(char*));
-//         string = (char**)malloc(sizeof(char*));
-//         string[i]=(char*)malloc(sizeof(char));
-        //printf("%s",KRED);
+
     }
     while (sim!='\xff');
    
