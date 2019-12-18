@@ -25,7 +25,7 @@ public:
         cout<<"Введите Площадь"<<endl;
          cin>>Area;
     }
-    void get() //show
+    void show() 
     {
        cout<<"Адрес: "<<Address<<endl;
         cout<<"Этаж: "<<Floor<<endl;
