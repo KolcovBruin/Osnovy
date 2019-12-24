@@ -1,25 +1,29 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+ //#include "curses.h"
+//#include < curses.h >
  #define Location_res "/Users/my/Desktop/проекты языка си/Курсач 🥰/Курсач 🥰/Result"
 #define Location_bd "/Users/my/Desktop/проекты языка си/Курсач 🥰/Курсач 🥰/Data_ base"
 #define Location_buf "/Users/my/Desktop/проекты языка си/Курсач 🥰/Курсач 🥰/Buffer"
-struct food
+struct Flat
    {
        char Adress[3];
-       int vlad;
+       int owner;
        int price;
    };
+
+//enum function {ened,rndom,dele,sech,srap,srva,new};
 const char *perevod (int inp);
 void preobr(char c); //перевод из чара в инт
-void out (struct food *ptr, int razmer, FILE* out);//вывод // fpout_1
-void in (struct food *ptr, int razmer, FILE* out);//считывание из файла // в тернарке сделать выбор на считывание исхожной бд, те ту которую мы либо сами написали, либо рандом
-void sch (struct food *ptr, int razmer, FILE* out);//поиск //fpout_1
-void rnd (struct food *ptr, int razmer, FILE* out);//рандомное задание новой БД //fpout_2
-void func_two (struct food *tpr);
-void del (struct food *ptr, int razmer, FILE* out);//удаление строки //fpout_1
-void sor_price (struct food *ptr, int razmer, FILE* out);//сортировка по стоимости //fpout_1
-void find (struct food *ptr, int razmer, FILE * out);//поиск по неполному совпадению  //fpout_1
+void out (struct Flat *ptr, int razmer, FILE* out);//вывод // fpout_1
+int in (struct Flat *ptr, int razmer, FILE* out);//считывание из файла // в тернарке сделать выбор на считывание исхожной бд, те ту которую мы либо сами написали, либо рандом
+void sch (struct Flat *ptr, int razmer, FILE* out);//поиск //fpout_1
+void rnd (struct Flat *ptr, int razmer, FILE* out);//рандомное задание новой БД //fpout_2
+void func_two (struct Flat *tpr);
+void del (struct Flat *ptr, int razmer, FILE* out);//удаление строки //fpout_1
+void sor_price (struct Flat *ptr, int razmer, FILE* out);//сортировка по стоимости //fpout_1
+void find (struct Flat *ptr, int razmer, FILE * out);//поиск по неполному совпадению  //fpout_1
 int main ()
 {
    
@@ -47,18 +51,16 @@ int main ()
     printf("Введите размер БД\n");
     scanf("%i", &raz);
 ////    raz=10;
-    struct food
-    {
-        char Adress[3];
-        int vlad;
-        int price;
-    }bd[raz];
+    struct Flat bd;
+    struct Flat *ptr;
+     ptr=(struct Flat*)malloc((8)*sizeof(struct Flat));
 
 //     fpout_1=fopen ( Location_res,"a+");
 //    fpout_2=fopen(Location_bd,"wt");
-    fpout_1=fopen(Location_res,"r+");
+   // fpout_1=fopen(Location_res,"r+");
+    fpout_1=fopen(Location_res,"w");
      fpout_2=fopen(Location_bd,"r+");
-     fpout_3=fopen(Location_buf,"r+");
+     fpout_3=fopen(Location_buf,"r");
     //fpin_2=fopen(Location_bd,"rt");
     /*
      
@@ -83,39 +85,107 @@ int main ()
     char line[3];
     int l;
     printf("База данных заданного размера создана.");
-    func:
+    enum function {
+        end=1,
+        random,
+        delet,
+        search,
+        sort_P,
+        sort_A,
+        new,
+        release=100
+        } user;
+     
+    user=release;
+    while(user-1)
+    {
+    //system("clear");
+   // erase();
+     printf("\nМеню:\n"                                                                                                                                                   "1 - выйти из прграммы\n"                                                                                                                                  "2 - Задать базу данных рандомно в отдельном файле\n"                                                                                                      "3 - удалить строку по номеру\n"                                                                                                                           "4 - поиск по неполному совпадению\n"                                                                                                                      "5 - сортировка по уменшению стоимости\n"                                                                                                                  "6 - сортировка в алфавитном порядке по Адресам\n"                                                                                                         "7 - Добавление новой строки\n");
+    scanf("%i",&user);
+    switch (user) {
+        case end:
+            printf("0\n");
+            break;
+            case random:
+                       printf("1\n");
+            rnd(&bd,raz, fpout_1);
+            out(&bd,raz, fpout_3);
+           // in(&bd,raz, fpout_2);
+                       break;
+            case delet:
+                       printf("2\n");
+            del(&bd,raz-1, fpout_1);
+             out(&bd,raz, fpout_3);
+                       break;
+            case search:
+                       printf("3\n");
+            raz=in(ptr,raz, fpout_3);
+            // ptr=(struct Flat*)realloc(ptr,(raz)*sizeof(struct Flat));
+           // printf("%i",bd.owner);
+           
+//            printf("\n%i",ptr[0].owner);
+//            printf("\n%i",ptr[4].owner);
+//            printf("\n%i",ptr[8].owner);
+//            printf("%i",raz);
+            
+           // find(bd,raz, fpout_1);
+                       break;
+            case sort_P:
+                       printf("4\n");
+            out(ptr,raz, fpout_1);
+                       break;
+            case sort_A:
+                       printf("5\n");
+            
+                       break;
+            case new:
+                       printf("6\n");
+                       break;
+        default:
+            break;
+    }
+  /*
+    
+    
+   
     printf("                                                              \nВы можете выполнить некоторые действия с данной базой данных: \n"                                                  "-Закончить выолнение любых действий - введите '-e';\n"                                                                                                     "-Удалить строку по её номеру - введите '-d';\n"                                                                                                           "-Добавить новую строку: \n"                                                                                                                               "-рандомная строка - введите '-sr' \n"                                                                                                                     "-свою строку - введите '-sn'; \n"                                                                                                                          "-Найти строку по неполному совпадения - введите '-f'; \n"                                                                                                  "-Отсортировать массив(после выбора данной функции будет получена расширенная инструкция) - введите '-so'\n");
    
 //    func_two(&shop);
 //    printf("  %d",shop[0].price);
 //     printf("  %d",shop[1].price);
 //    printf("  %d",shop[1].price);
-    scanf("%s",&line);
+    scanf("%s",&line);*/
    //  printf("  %d",shop[0].price);
-    (strcmp(line,"-d")==0)?                                                                                                                                    (del(&bd,raz-1, fpout_1)):                                                                                                                       (strcmp(line,"-sr")==0)?                                                                                                                  (printf("sr\n")):                                                                                                                                            (strcmp(line,"-sn")==0)?                                                                                                                      (printf("sn\n")):                                                                                                                                           (strcmp(line,"-f")==0)?                                                                                                                      (find(&bd,raz, fpout_1)):                                                                                                                                            (strcmp(line,"-so")==0)?                                                                                                             (sor_price(&bd,raz, fpout_1)):                                                                                                    (strcmp(line,"-rn")==0)?                                                                                                                        (rnd(&bd,raz, fpout_1)):                                                                                                                        (strcmp(line,"-ot")==0)?                                                                                                                       (out(&bd,raz, fpout_3)):                                                                                                                       (strcmp(line,"-in")==0)?                                                                                                                       (in(&bd,raz, fpout_2)):                                                                                                                            NULL ;
+    // 1-res 2-bd 3-buf
+  
+    
+  /*  (strcmp(line,"-d")==0)?                                                                                                                                    (del(&bd,raz-1, fpout_1)):                                                                                                                       (strcmp(line,"-sr")==0)?                                                                                                                  (printf("sr\n")):                                                                                                                                            (strcmp(line,"-sn")==0)?                                                                                                                      (printf("sn\n")):                                                                                                                                           (strcmp(line,"-f")==0)?                                                                                                                      (find(&bd,raz, fpout_1)):                                                                                                                                            (strcmp(line,"-so")==0)?                                                                                                             (sor_price(&bd,raz, fpout_1)):                                                                                                    (strcmp(line,"-rn")==0)?                                                                                                                        (rnd(&bd,raz, fpout_1),out(&bd,raz, fpout_2)):                                                                                                                        (strcmp(line,"-ot")==0)?                                                                                                                       (out(&bd,raz, fpout_3)):                                                                                                                       (strcmp(line,"-in")==0)?                                                                                                                       (in(&bd,raz, fpout_2)):                                                                                                                            NULL ;
+    
+    
     if (strcmp(line,"-e")==0)
-        goto end;
-    goto func;
-    end:
-    printf("");
+        goto end;*/
+    }
+    //goto func;
+    
 
 }
-void func_two (struct food *tpr)
+void func_two (struct Flat *tpr)
 {
-    struct food *tpr_1;
+    struct Flat *tpr_1;
     tpr_1=tpr;
     tpr_1++;
     tpr->price=tpr_1->price;
 }
-void del (struct food *ptr, int razmer, FILE * out)
+void del (struct Flat *ptr, int razmer, FILE * out)
 {
     
       
     int delete;
     
      int flag=0;
-    struct food *ptr_1;
-     struct food *ptr_2;
+    struct Flat *ptr_1;
+     struct Flat *ptr_2;
     ptr_1=ptr;
     ptr_2=ptr;
     ptr_1++;
@@ -133,7 +203,7 @@ void del (struct food *ptr, int razmer, FILE * out)
                   for (int j=0; j<3;j++)
                       ptr_2->Adress[j]=ptr_1->Adress[j];
                      ptr_2->price=ptr_1->price;
-                     ptr_2->vlad=ptr_1->vlad;
+                     ptr_2->owner=ptr_1->owner;
                  }
                  ptr_2++;
                  ptr_1++;
@@ -152,7 +222,7 @@ void del (struct food *ptr, int razmer, FILE * out)
               //u=0;
               fprintf(out,"  %d",ptr->price);
               fprintf(out,"       " );
-               fprintf(out,"  %d",ptr->vlad);
+               fprintf(out,"  %d",ptr->owner);
                fprintf(out,"\n");
               ptr++;
           }
@@ -164,7 +234,7 @@ void del (struct food *ptr, int razmer, FILE * out)
  */
 
 
-void sor_price (struct food *ptr, int razmer, FILE * out)
+void sor_price (struct Flat *ptr, int razmer, FILE * out)
 {
       fprintf(out,"\nСортировка строк по стоимости\n" );
     int delete;
@@ -176,8 +246,8 @@ void sor_price (struct food *ptr, int razmer, FILE * out)
     char buf_c1[3];
      char buf_c2[3];
     // int flag=0;
-    struct food *ptr_1;
-     struct food *ptr_2;
+    struct Flat *ptr_1;
+     struct Flat *ptr_2;
     ptr_1=ptr;
     ptr_2=ptr;
     ptr_2++;
@@ -200,11 +270,11 @@ void sor_price (struct food *ptr, int razmer, FILE * out)
                     {
                         buf_c1[a]=ptr_1->Adress[a];
                     }
-                    buf_3=ptr_1->vlad;
+                    buf_3=ptr_1->owner;
                     jj=j;
                     buf_1=ptr_1->price;
                     ptr_1->price=ptr_2->price;
-                    ptr_1->vlad=ptr_2->vlad;
+                    ptr_1->owner=ptr_2->owner;
                     for(int a=0;a<3;a++)
                     {
                         ptr_1->Adress[a]=ptr_2->Adress[a];
@@ -213,13 +283,13 @@ void sor_price (struct food *ptr, int razmer, FILE * out)
                     {
                         ptr_1++;
                         buf_2=ptr_1->price;
-                        buf_4=ptr_1->vlad;
+                        buf_4=ptr_1->owner;
                         for(int a=0;a<3;a++)
                         {
                             buf_c2[a]=ptr_1->Adress[a];
                         }
                         ptr_1->price=buf_1;
-                         ptr_1->vlad=buf_3;
+                         ptr_1->owner=buf_3;
                         for(int a=0;a<3;a++)
                         {
                             ptr_1->Adress[a]=buf_c1[a];
@@ -282,12 +352,12 @@ void sor_price (struct food *ptr, int razmer, FILE * out)
               //u=0;
               fprintf(out,"  %d",ptr->price);
               fprintf(out,"       " );
-               fprintf(out,"  %d",ptr->vlad);
+               fprintf(out,"  %d",ptr->owner);
                fprintf(out,"\n");
               ptr++;
           }
 }
-void find (struct food *ptr, int razmer, FILE * out)
+void find (struct Flat *ptr, int razmer, FILE * out)
 {
     char fin[3];
     int e=0;
@@ -321,7 +391,7 @@ void find (struct food *ptr, int razmer, FILE * out)
         //u=0;
         printf("  %d",ptr->price);
         printf("       " );
-         printf("  %d",ptr->vlad);
+         printf("  %d",ptr->owner);
          printf("\n");
            
             fprintf(out,"  " );
@@ -331,7 +401,7 @@ void find (struct food *ptr, int razmer, FILE * out)
             //u=0;
             fprintf(out,"  %d",ptr->price);
             fprintf(out,"       " );
-             fprintf(out,"  %d",ptr->vlad);
+             fprintf(out,"  %d",ptr->owner);
              fprintf(out,"\n");
             
         }
@@ -340,8 +410,9 @@ void find (struct food *ptr, int razmer, FILE * out)
     }
          
 }
-void rnd (struct food *ptr, int razmer, FILE* out)
+void rnd (struct Flat *ptr, int razmer, FILE* out)//изменить функционирование на вывод информации в файл, а затем чтение из файла в бд
 {
+     printf("рандом\n");
     int a=0;
     int raz=0;
     srand(time(NULL));
@@ -361,12 +432,12 @@ void rnd (struct food *ptr, int razmer, FILE* out)
            {
                 (a==1)?                                                                                                                          (ptr->Adress[j]=ad1[j]):                                                                                                                        (a==2)?                                                                                                                         (ptr->Adress[j]=ad2[j]):                                                                                                                   (a==3)?                                                                                                                         (ptr->Adress[j]=ad3[j]):                                                                                                  (ptr->Adress[j]=ad4[j]);
            }
-           ptr->vlad= 0+ rand()%9;
+           ptr->owner= 0+ rand()%9;
            ptr++;
       }
         
 }
-void out (struct food *ptr, int razmer, FILE* out)
+void out (struct Flat *ptr, int razmer, FILE* out)
 {
    // fprintf(out,"\n" );
            // fprintf(out,"%s\n","Адрес   Стоимость Колво владельцев " );
@@ -381,21 +452,25 @@ void out (struct food *ptr, int razmer, FILE* out)
                  //u=0;
                  fprintf(out,"  %d.",ptr->price);
                  fprintf(out,"       " );
-                  fprintf(out,"  %d",ptr->vlad);
+                  fprintf(out,"  %d",ptr->owner);
                   fprintf(out,".\n");
                  ptr++;
              }
 }
-void in (struct food *ptr, int razmer, FILE* out)
+int in (struct Flat *ptr, int razmer, FILE* out)
 {
+    int cnt=0;
     char sim;
         //внутри БД
     sim=fgetc(out);
         char toc='\0';
+    // ptr=(struct Flat*)malloc((0)*sizeof(struct Flat));
         while (sim!=EOF)
         {
+      //     ptr=(struct Flat*)realloc(ptr,(cnt+1)*sizeof(struct Flat));
         while(sim!='\n')
         {
+            
             //внутри строки
             
               //  по символьно
@@ -403,7 +478,7 @@ void in (struct food *ptr, int razmer, FILE* out)
                 {
                     for (int j=0;j<3;j++)
                     {
-                        ptr->Adress[j]=sim;
+                        ptr[cnt].Adress[j]=sim;
                         sim=fgetc(out);
                     }
                 }
@@ -419,7 +494,7 @@ void in (struct food *ptr, int razmer, FILE* out)
                         e+=(int)(sim)-'0';
                         sim=fgetc(out);
                         if((toc=sim)=='.')
-                            ptr->price=e;
+                            ptr[cnt].price=e;
                         
                     }
                     }
@@ -431,17 +506,23 @@ void in (struct food *ptr, int razmer, FILE* out)
                         e+=(int)(sim)-'0';
                         sim=fgetc(out);
                         if(sim=='.')
-                            ptr->vlad=e;
+                            ptr[cnt].owner=e;
                     }
                      
                     
                 }
             sim=fgetc(out);
+            
         }
-            ptr++;
+            cnt++;
+           // ptr++;
             toc='\0';
              sim=fgetc(out);
     }
+//    printf("\n%i",ptr[0].owner);
+//    printf("\n%i",ptr[4].owner);
+//    printf("\n%i",ptr[8].owner);
+    return cnt;
  }
     
 
@@ -450,3 +531,7 @@ void oforml(FILE* out)
     fprintf(out,"%s\n","Адрес   Стоимость Колво владельцев " );
 }
 //save
+
+
+
+ 
