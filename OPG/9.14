@@ -1,0 +1,56 @@
+#include <stdio.h> #include <stdlib.h> #include <string.h>
+int main() {
+FILE* fpin;//входящий файловый указатель FILE* fpout;//выходящий файловый указатель fpin = fopen("test.txt", "r"); //чтение fpout = fopen("resut.txt", "w"); //запись char line[40];
+int count = 0;//счетчик строк
+int flag = 0;//0-число не найдено/ 1-найдено
+char* begin;
+char* end;
+char number[40]; //массив для числа
+int i = 0;//индекс массив с числом
+int result;
+int max = -9999;//максимальное значение
+int numstring = 0;// номер строки с максимальным числом while (!feof(fpin))//пока файл не закончился
+{
+== '6')
+char* ptr = fgets(line, 40, fpin);//чтение одной строки if (ptr == NULL)
+    break;
+count++;
+while (*ptr != '\0') {
+if ((*ptr == '1') || (*ptr == '2') || (*ptr == '3') || (*ptr == '4') || (*ptr == '5') || (*ptr || (*ptr == '7') || (*ptr == '8') || (*ptr == '9') || (*ptr == '0'))
+{
+if (flag == 0)//если небыло цифры {
+flag = 1; //нашли число
+begin = ptr;//запомнили начало числа
+}
+}
+else
+{
+if (flag == 1)
+{
+end = ptr; //конец числа (буква)
+for (ptr = begin, i = 0; ptr != end; ptr++, i++) //копирование в другой массив {
+number[i] = *ptr;
+}
+i++;
+number[i] = '\0';//востановление завершающего символа строки
+result = atoi(number); //результат (атои - перевод символов в цифры) if (result > max)
+{
+max = result;
+numstring = count; //подбор макс числа (сравнение) }
+memset(number, 0, 40);//обнуление массива flag = 0;
+begin = NULL;
+end = NULL;
+4
+} }
+ptr++; }
+        memset(line, 0, 40);
+    }
+fseek(fpin, 0, SEEK_SET);//указатель в файле становится на начало for (i = 1; i <= count; i++)
+{
+fgets(line, 40, fpin); //получить строчку if (i != numstring)
+{
+fputs(line, fpout); // напечать строчку в другой файл }
+    }
+    fclose(fpin);
+    fclose(fpout);
+}
