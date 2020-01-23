@@ -1,0 +1,50 @@
+#pragma warning(disable:4996)
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+int main(int argc, char* argv[]) //количество аргументов(1ый всегда адрес экзешника, в остальных параметры); Cами праметры[] которые у нас есть
+{
+	FILE* f;
+	int slovo = 1, N = 0; // cлова и номер удал€емого
+	char ch; // “екущий символ
+	char ch_gag; //предыдущий символ
+	char filename[100] = { 0 }; //им€ файла
+	//ѕровер€ем на наличие аргументов по умолчанию
+	if (argc == 2)
+		strcpy(filename, argv[1]);
+	else {
+	tr:
+		printf("Please enter a file address: ");
+		gets(filename);
+	}
+	if ((f = fopen(filename, "r")) == NULL) //ќткрытие файла дл€ чтени€
+	{
+		printf("Cannot open input file.\n");
+		goto tr; // ѕовтор€ем, пока пользователь не введет корректный путь
+	}
+	printf("This program deletes one word in the text file.\n");
+	printf("Please enter a line to delete: ");
+	scanf_s("%d", &N);
+	FILE* fpout;
+	fpout = fopen("C:\\Users\\Admin\\source\\repos\\laba9\\result.txt", "w"); // ќткрытие файла дл€ записи результата 
+	fprintf(fpout, "Result text file: \n");
+	while (!feof(f))
+	{
+		ch = fgetc(f);
+		if (ch == -1) //—оздаем переменную, равную значению предыдущего символа, дл€ определени€ "слова" среди допустимых разделителей
+			break;
+		if ((N != slovo) || (ch == ' ' || ch == '\t' || ch == '\n'))
+		{
+			fprintf(fpout, "%c", ch);
+		}
+		if ((ch == ' ' || ch == '\t' || ch == '\n') && ch_gag != ' ' && ch_gag != '\t' && ch_gag != '\n') // ƒелаем, так, чтобы слова считались с учетом нескольких пробелов
+			slovo++; // определение слова
+		if (ch == '\n')
+			slovo = 1; 
+		ch_gag = ch;
+	}
+	fclose(fpout); // закрываем файлы
+	fclose(f); //
+	return 0;
+}
