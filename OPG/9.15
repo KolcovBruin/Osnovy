@@ -1,0 +1,52 @@
+#pragma warning(disable:4996) #include <stdio.h>
+#include <string.h>
+int main(int argc, char* argv[]) {
+char filename[100] = { 0 }; //имя файла
+        FILE* fp;
+//Проверяем на наличие аргументов по умолчанию
+if (argc == 2)
+strcpy(filename, argv[1]);
+else { tr:
+}
+if ((fp = fopen(filename, "r")) == NULL) //Открытие файла для чтения {
+printf("Please enter a file address: ");
+gets(filename);
+printf("Cannot open input file.\n");
+goto tr; // Повторяем, пока пользователь не введет нужное
+}
+int m = 0, k = 0, i = 0; //m - длина самой ДЛИННОЙ строки рассматриваемой строки i -
+//ищем m-длину максимальной строки do
+{
+while ((getc(fp) != '\n') && (!feof(fp))) k++;
+if (k > m) m = k;
+k = 0;
+} while (!feof(fp));
+k - длина
+        rewind(fp); //перемещает указатель положения в файле на начало
+указанного потока
+        FILE* fp_out;
+fopen_s(&fp_out, "D:\\Statistic\\creator.txt", "w"); //Открываем файл для записи
+int space, len, beginning_line; //кол-во пробелов, длина и указатель на начало текущей строки
+char c; do
+{
+beginning_line = ftell(fp); //возвращает текущее значение указателя положения в файле для указанного потока
+НАЧАЛА файла
+space = len = 0; //начало строки
+//считаем количество пробелов
+while (((c = getc(fp)) != '\n') && (!feof(fp))) //одна строка {
+if (c == ' ') space++;
+len++; }
+fseek(fp, beginning_line, SEEK_SET); // перехода на число байт от
+while (((c = getc(fp)) != '\n') && (!feof(fp))) {
+if (c != ' ') fprintf(fp_out, "%c", c); else
+{
+//k - количество пробелов, которое нужно вывести
+if ((m - len) % space) //если разница в длине максимальной строки и текущей не делится нацело на количество пробелов в текущей
+строке
+{
+k = (m - len) / space + 2; //+1 исходный пробел и +1 пробел от остатка деления, поэтому +2
+                                      len++; //чтобы больше не входить в эту
+часть кода, при обработке данной строки
+}
+else k = (m - len) / space + 1; //+1 что бы сохранить исходный пробел, на который выводим
+}
