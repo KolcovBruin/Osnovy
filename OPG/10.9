@@ -1,0 +1,61 @@
+#include <stdio.h> #include <string.h> #include <malloc.h>
+void main(void) {
+FILE *fpin; // входной файл
+char * buffer = NULL;
+char **lines = NULL; // указатель на динамический массив char line[100];
+int lsize = 0;
+int k = 0;
+int i = 0;
+int flag = 1;
+fpin = fopen("id.txt", "r");// открыть файл для чтения
+while (1) {// цикл до конца входного файла
+i = 0;//индекс для считываемой информации - слова flag = 1;//флаг о том, что не конец слова
+while (flag) {
+char c = fgetc(fpin);
+if (c == 'я') {//если конец файла
+flag = 3;//поднять флаг
+                break;//выйти
+            }
+if (c >= 'A' && c <= 'Z') c += 'a' - 'A';
+if (c != ' ' && c!='\n') {//если не пробел или не энтер, то буква - а занчт записываем в
+line[i] = c;//запись буквы в массив
+                i++;//увеличесние индекса для записи
+            }
+else {
+flag = 0;//понизиить флаг для выхода из цикла
+} }
+if (flag == 3) {//если файл кончился break;//выйти
+}
+line[i] = '\n';//дополнение считыванного дл настоящей строки i++;
+line[i] = '\0';
+lsize = strlen(line);//узнаем размер строки из файла k++; //счетчик нужного количества строк
+buffer = (char*)realloc(buffer, (lsize + 1) * sizeof(char)); //выделение нужного количества памяти в массиве BUFFER для строки из файла
+strcpy(buffer, line);//копируем прочитанную стркоу из файла в дин массив бафер // заказать динамический массив указателей c выделением памяти
+lines = (char**)realloc(lines, k * sizeof(char*));
+// заказать в памяти место для строки плюс один байт
+lines[k - 1] = (char*)malloc(sizeof(char) *(lsize+1)); //копируем. Очищаем буфер
+strcpy(lines[k - 1], buffer);//копируем бафер в двумерный массив
+    }
+    fclose(fpin);
+for (int ii = 0; ii < k; ii++) {
+for (int i = 0; i < k - 1; i++) {
+if (strcmp(lines[i], lines[i + 1]) > 0) {
+lsize = strlen(lines[i]);//опредляем размер первой строки для обмена
+слово
+4
+buffer = (char*)realloc(buffer, вмещения этой строки
+5
+(lsize + 1) * sizeof(char));//расширяем бафер для strcpy(buffer, lines[i]);//копируем строку в бафер
+lsize = strlen(lines[i+1]);//опредляем размер второй строки для обмена
+lines[i] = (char*)realloc(lines[i], sizeof(char) * (lsize+1));//расширяем первую стркоку для вмещения второй строки
+                strcpy(lines[i], lines[i + 1]);//копируем вторую строку в первую
+lsize = strlen(buffer);//опредляем размер бафера
+lines[i+1] = (char*)realloc(lines[i+1], sizeof(char) * (lsize + 1));//расширяем вторую стркоку для вмещения бафера
+strcpy(lines[i + 1], buffer);//копируем бафер во вторую строку }
+} }
+//вывод на экрна и очистка памяти
+for (int i = 0; i<k; i++) { puts(lines[i]);
+        free(lines[i]);
+lines[i] = NULL; }
+free(lines); lines = NULL; free(buffer); buffer = NULL;
+}
