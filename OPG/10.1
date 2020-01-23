@@ -1,0 +1,139 @@
+#include "pch.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+#pragma warning(disable : 4996)
+
+void func(int begin, int finish, char *line, char *name_mas, int name_counter)
+{
+	int j = 0;     //j - счётчик для массива rez			
+	char *rez = (char*)malloc(500 * sizeof(char));             //rez - символьный массив для вывода вызовов функций
+	while (begin < finish)
+	{
+		int start = 0, end = 0;
+		int call_func = 0;
+		if (line[begin] == '(')
+		{
+			start = begin;
+			while (line[begin] != ')')
+			{
+				begin++;
+			}
+			if (line[begin + 1] == ';')
+			{
+				end = begin + 2;
+				call_func = 1;
+				start -= 2;                                       // -2, потому что при вызове бывает пробел call_func (...)
+				while (line[start] != ' ' && line[start] != '\n')
+				{
+					start--;
+				}
+				start--;
+				line[start] = '\t';
+			}
+		}
+		if (call_func)
+		{
+			for (int i = start; i < end; i++, j++)
+			{
+				if (((line[i] == 'w') && (line[i + 1] == 'h') && (line[i + 2] == 'i') && (line[i + 3] == 'l') && (line[i + 4] == 'e'))||((line[i] == 'f')&& (line[i+1] == 'o') && (line[i+2] == 'r')))
+				{
+					break;
+				}
+				rez[j] = line[i];
+			}
+			rez[j - 1] = '\n';
+		}
+		begin++;
+	}
+	
+	printf("\nфункция ");
+	for (int i = 0; i < name_counter; i++)
+	{
+		printf("%c", name_mas[i]);
+	}
+	printf(" вызывает:\n");
+	for (int i = 0; i < j; i++)
+	{
+		printf("%c", rez[i]);
+	}
+	free(rez);
+	
+}
+
+int main(int argc, char* argv[])
+{
+	FILE *fp=NULL;
+	setlocale(LC_ALL, "Russian");
+	char filename[100] = { 0 };
+
+	if (argc == 2)
+		strcpy(filename, argv[1]);
+	else
+	{
+		do
+		{
+			printf("Please enter a address file : ");
+			gets_s(filename);
+
+			if ((fp = fopen(filename, "r")) == NULL) //Открытие файла для чтения 
+			{
+				printf("Cannot open input file.\n");
+			}
+		} while (fp == NULL);
+	}
+	char *line = (char*)malloc(5000 * sizeof(char));           //fstr - строка, в которой хранится текст из файла file.txt
+	int f_counter = -1;                                          // счётчик по файлу
+	while (!feof(fp))
+	{
+		f_counter++;
+		line[f_counter] = fgetc(fp);
+	}
+	int cnt = 0;                                                //cnt - счетчик цикла
+	int func_start = 0, func_end = 0;
+	char *name = (char*)malloc(50 * sizeof(char));              //для хранения названий функций
+	while (cnt < f_counter)
+	{
+		int open_bracket = 0, close_bracket = 0;
+		if (line[cnt] == '{')
+		{
+			func_start = cnt;
+			do
+			{
+				if (line[cnt] == '{')
+					open_bracket++;
+				if (line[cnt] == '}')
+					close_bracket++;
+				cnt++;
+			} while (open_bracket != close_bracket);
+			func_end = cnt;
+
+			int beg_name = func_start;
+			while (line[beg_name] != '(')
+			{
+				beg_name--;
+			}
+			beg_name -= 2;                                // -2, потому что бывает ставят в названии функции пробел func (...)
+			while (line[beg_name] != ' ' && line[beg_name] != '\n')
+			{
+				beg_name--;
+			}
+			beg_name++;                                 // ++, чтобы считывание имени функции было с самого первого символа
+			int k = 0;
+			while (line[beg_name] != '(')
+			{
+				name[k] = line[beg_name];
+				k++;
+				beg_name++;
+			}
+			func(func_start, func_end, line, name, k);
+			memset(name, '\0', 20);
+		}
+		cnt++;
+	}
+	free(name);
+	free(line);
+	fclose(fp);
+}
