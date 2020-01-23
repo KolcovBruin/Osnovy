@@ -1,0 +1,141 @@
+/*Вывести на экран содержимое файла с программой на языке С, выделяя в строке все описания и объявления переменных.*/
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <Windows.h>
+#include <locale.h>
+#define MAXPATHSIZE 1900
+#define MAXPROGRAMSIZE 19000
+void read_file(char path[], FILE* F1); bool compare(char* begin);
+void color_green(char* begin_c); void color_white(char* begin_c);
+int main() {
+FILE* F1;
+char path[MAXPATHSIZE]; setlocale(LC_ALL, "Rus"); printf("Введите путь к файлу: "); gets_s(path, MAXPATHSIZE); read_file(path, &F1); system("pause");
+return 0;
+}
+void read_file(char path[], FILE* F1) {
+// Функция для чтения файла
+// Функция сравнения
+// Функция для записи зелёным цветом
+// Функция для записи белым цветом
+// Получаем путь к файлу
+errno_t file;
+bool flag = 0;
+bool found = 0;
+bool found_parenthes = 0;
+bool found_commment = 0;// Признак комментария, не выделяет в комментарии
+int i = 0, num_str = 1;// i - счётчик символов с новой строки, num_str - нужен, чтобы
+избавиться от лишних символов, тк (\n - 2 символа)
+char* begin, * begin_save = NULL; // begin - бегущий указатель по массиву, begin_save -
+указатель для сохранения
+char arr_for_program[MAXPROGRAMSIZE]; // Сам массив
+begin = arr_for_program;
+if ((file = fopen_s(&F1, path, "r")) != NULL) // Открываем файл на чтение {
+== '(')
+}
+begin = arr_for_program; i = 0; // Настраиваем указатель на начало массива while (*begin) // Аналогично: пока *begin != '\0'
+{
+if (*begin == ' ' || *begin == '\n' || *begin == '\t' || *begin == ')' || *begin // Если разделитель, то обнуляем наши флаги
+{
+flag = 0;
+found = 0; found_parenthes = 0;
+}
+while (!feof(F1)) {
+fgets(begin, MAXPROGRAMSIZE, F1); i = ftell(F1) - num_str; num_str++;
+begin = &arr_for_program[i];
+// Заполнием массив по-строчно
+if (*begin == '\n')
+// Хранит код ошибки, при неудачном открытии файла // Признак слова (в/вне)
+// Признак идентификатора int, float, double, char,bool // Признак скобок нужен, чтобы не выделялись функции
+printf("Ошибка открытия файла для чтения!\n");
+return; // Если не удалось, то возвращаемся
+} }
+else
+{
+{
+i = 0;
+found_commment = 0;
+if ((*begin == '/') && (*(begin + 1) == '/'))// Если встретили признак комментария, поднимаем флаг
+found_commment = 1;
+if (flag == 0)// Если это первый символ после разделителя, то заходим {
+if ((*begin == 'i') || (*begin == 'c') || (*begin == 'd') || (*begin
+== 'f') || (*begin == 'b'))
+{
+скобок
+нашли, то уходим
+found = compare(begin);// Ищем индентификаторы if (found == 1) // Если нашли, то заходим
+begin_save = begin; // Сохраняем позицию бегина while (*begin != '\n' && *begin != '\0') // Ищем признак
+{
+}
+begin = begin_save;
+if (*begin == '(' && found_commment == 0) // Если {
+found_parenthes = 1; begin++;
+break;
+}
+i++;
+begin++;
+// Возвращаемся на сохранённую позицию
+begin_save=begin+i+1; i=0; //
+Настраиваем бегин сейф для дальнейшего заполнения параметров функции
+while (*begin != ';' &&*begin != ')' && found_parenthes == 0 && found_commment == 0 && *begin != '\n')
+{
+                                            color_green(begin);
+               // Если в строке не было скобок и это не комментарий, то красим до ;
+{
+} }
+begin++; }
+}
+flag = 1;
+// Признак слова
+}
+if (begin == begin_save && found_parenthes == 1)
+// Для покраски параметров функции (можно закомментить, если не нужно) {
+while ((*begin != ')' && *begin != ';') && *begin != '\0' && *begin != '\n') {
+       color_green(begin);
+begin++; }
+               color_white(begin);
+begin++; }
+       /*puts(begin);*/
+}
+bool compare(char* begin) {
+bool found = 0;
+if (*(begin + 1) == 'n') // Если первый элемент i, второй n и тд, то поднимаем флаг. Аналогично с остальными
+if (*(begin + 2) == 't')
+
+if (*(begin + 3) == ' ') found = 1;
+}
+else if (*(begin + 1) == 'h') {
+if (*(begin + 2) == 'a')
+if (*(begin + 3) == 'r')
+if (*(begin + 4) == ' ') found = 1;
+}
+else if (*(begin + 1) == 'l') {
+if (*(begin + 2) == 'o')
+if (*(begin + 3) == 'a')
+if (*(begin + 4) == 't')
+if (*(begin + 5) == ' ')
+found = 1;
+}
+else if (*(begin + 1) == 'o') {
+if (*(begin + 2) == 'u')
+if (*(begin + 3) == 'b')
+if (*(begin + 4) == 'l')
+if (*(begin + 5) == 'e')
+if (*(begin + 6) == ' ') found = 1;
+}
+if (*(begin + 1) == 'o') {
+if (*(begin + 2) == 'o')
+if (*(begin + 3) == 'l')
+if (*(begin + 4) == ' ') found = 1;
+       }
+       return found;
+}
+void color_green(char* begin_c)
+{
+HANDLE hSTDout;
+hSTDout = GetStdHandle(STD_OUTPUT_HANDLE);
+// Создаём переменную типа HANDLE и говорим, что у нас будет изменён цвет SetConsoleTextAttribute(hSTDout, 2);// вывода символов на зелёный
+printf("%c", *begin_c); void color_white(char* begin_c)
+// И выводим
+} {
+}
