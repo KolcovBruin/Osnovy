@@ -1,0 +1,159 @@
+#include <stdio.h> 
+#include <string.h> 
+#include <windows.h> 
+#include <locale.h> 
+ 
+#define TRUE 1 
+#define FALSE 0 
+ 
+#define BUFFER_SIZE 10001 //line max length - 1 
+ 
+int formate(FILE* input_stream_input); 
+int is_delimiter(char); 
+int check_for_bracket(char*); 
+int check_escaping(char*); 
+ 
+int main() { 
+ setlocale(LC_ALL, ""); 
+ FILE* input_stream; 
+ errno_t err = fopen_s(&input_stream, "input.txt", "rt"); //open input file  
+ if (err == 2) 
+ { 
+  printf_s("No such input file"); 
+  return 0; 
+ } 
+ else if (err != 0) { 
+  printf_s("FILE ERROR!!!! CALLS FIXIKI PLIZ"); 
+  return 0; 
+ } 
+ formate(input_stream); 
+ return 0; 
+} 
+ 
+int formate(FILE* input_stream) { 
+ 
+ unsigned short //some flags 
+  is_comment = FALSE, 
+  is_multi_comment = FALSE, 
+  is_char = FALSE, 
+  is_string_literal = FALSE; 
+ 
+ HANDLE hStdout; //handle to the standart output device 
+ CONSOLE_SCREEN_BUFFER_INFO csbiInfo; //information about console screen buffer 
+ WORD ColorDefault, ColorRed; //colors 
+ 
+ hStdout = GetStdHandle(STD_OUTPUT_HANDLE); 
+ GetConsoleScreenBufferInfo(hStdout, &csbiInfo); 
+ ColorDefault = csbiInfo.wAttributes; //get console curent back and font color 
+ ColorRed = ColorDefault & 0xF0 | 0xc; 
+ 
+ char buffer[BUFFER_SIZE], * ptr, * word_first_char_ptr = NULL, * word_last_char_ptr = NULL; 
+ 
+ while (!feof(input_stream)) { 
+  is_comment = FALSE; 
+  is_char = FALSE; 
+  is_string_literal = FALSE; 
+  //just read new line and check result 
+  ptr = fgets(buffer, BUFFER_SIZE, input_stream); 
+  if (ptr == NULL) { 
+   if (!feof(input_stream)) { 
+    return -1; //erorr while reading a file 
+   } 
+   return 0; //end of file 
+  } 
+  while (*ptr != '\0') { 
+   if (is_comment == TRUE || is_multi_comment == TRUE) { //if we are in comment 
+    printf_s("%c", *ptr); //just print this symbol 
+    if (*ptr == '*' && *(ptr + 1) == '/') { //check for the end of comment 
+     printf_s("%c", *(++ptr)); 
+     is_multi_comment = FALSE; 
+    } 
+    ptr++; 
+    continue; 
+   } 
+   if (is_string_literal == TRUE || is_char == TRUE) { //if we are in string litheral 
+    if (*ptr == '"' && check_escaping(ptr) && is_char != TRUE) //check if it is the closing quote 
+     is_string_literal = FALSE; 
+    if (*ptr == '\'' && check_escaping(ptr) && is_string_literal != TRUE) //check if it is the closing quote 
+     is_char = FALSE; 
+    printf_s("%c", *ptr); 
+    ptr++; 
+    continue; 
+   } 
+   if (!is_delimiter(*ptr)) { 
+    if (word_first_char_ptr == NULL) { //if first char after a delim 
+     word_first_char_ptr = ptr; 
+    } 
+   } 
+   else { 
+    if (word_first_char_ptr == NULL) { 
+     //no word is checking right now, so just do some important stuff 
+     if (*ptr == '/') { //check if comment started 
+      if ((*(ptr + 1) == '/')) { 
+       is_comment = TRUE; 
+      } 
+      else if (*(ptr + 1) == '*') { 
+       is_multi_comment = TRUE; 
+      } 
+      printf_s("%c", *ptr++); 
+      printf_s("%c", *ptr); 
+     } 
+     if (*ptr == '"') { //check if a string literal starts 
+      is_string_literal = TRUE; 
+      printf_s("%c", *ptr); 
+     } 
+     if (*ptr == '\'') { //check if a char literal starts 
+      is_char = TRUE; 
+      printf_s("%c", *ptr); 
+     } 
+     if (is_comment == FALSE && is_multi_comment == FALSE && is_string_literal == FALSE && is_char == FALSE) //if it is just boring delimeter 
+      printf_s("%c", *ptr); 
+    } 
+    else { 
+     if (word_last_char_ptr == NULL) { //if first delim after a word 
+      word_last_char_ptr = ptr - 1; 
+      int res = 0; 
+      if (check_for_bracket(ptr) == TRUE) SetConsoleTextAttribute(hStdout, ColorRed); 
+      size_t size = word_last_char_ptr - word_first_char_ptr + 2; //count of symdols plus 1 for terminator 
+      char* word = malloc(sizeof(char) * size); 
+      if (word == NULL) return -1; 
+      strncpy_s(word, size, word_first_char_ptr, size - 1); //copy word into new string 
+      printf_s("%s", word); 
+      SetConsoleTextAttribute(hStdout, ColorDefault); 
+      ptr = word_last_char_ptr; //set ptr to word last char ptr for that the delim will be processed on the next iterationword_first_char_ptr = NULL; 
+      word_last_char_ptr = NULL; 
+      free(word); 
+     } 
+    } 
+   } 
+   ptr++; 
+  } 
+ } 
+ 
+ return 0; 
+} 
+ 
+int is_delimiter(char c) { 
+ char delimiters[] = { " \t,;:(){}[]+-/*!=<>\"&'\n\0" }; //string of delimeters 
+ return strchr(delimiters, c) == NULL ? FALSE : TRUE; 
+} 
+ 
+int check_for_bracket(char* ptr) { 
+ while (*ptr != '\0') { 
+  if (*ptr == '[') return TRUE; 
+  if (*ptr != '\t' && *ptr != ' ' && *ptr != '\n') return FALSE; 
+  if (is_delimiter(*ptr) == FALSE) return FALSE; 
+  ptr++; 
+ } 
+ return FALSE; 
+} 
+ 
+int check_escaping(char* ptr) { 
+ size_t count = 0; 
+ ptr--; 
+ while (*ptr == '\\') { 
+  count++; 
+  ptr--; 
+ } 
+ return !(count % 2); //if count is even or zero, that means that this symbol is not escaping 
+}
